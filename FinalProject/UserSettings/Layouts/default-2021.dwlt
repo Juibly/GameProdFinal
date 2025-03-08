@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 21
+  controlID: 105
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 79
+  controlID: 16
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 80
+  controlID: 17
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -317,22 +317,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes/Gameplay
+    - Assets/Art/Icons/UI
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes/Gameplay
+  - Assets/Art/Icons/UI
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\melis\Desktop\Final Game Prod Project\GameProdFinal\FinalProject
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 127}
-    m_SelectedIDs: 585a0000
-    m_LastClickedID: 23128
-    m_ExpandedIDs: 00000000fe5900001c5a0000245a000000ca9a3bffffff7f
+    m_SelectedIDs: 385c0000
+    m_LastClickedID: 23608
+    m_ExpandedIDs: 00000000a45a0000aa5a0000b25a00002e5c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -360,7 +360,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fe590000
+    m_ExpandedIDs: 00000000a45a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -490,7 +490,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 4ec7fffffec7ffff8ac8ffff8aceffff34d2ffff80d2ffffc6d2fffff0d5ffff10d9ffff62d9ffffb2d9ffff5edbfffffadcffff02dfffff1ae1ffffc2e2ffff8ce5ffff6ef0ffff0ef1ffff1af2ffff68f2ffff80f4ffff48f6ffff3afbffff965f0000
+      m_ExpandedIDs: b4acffff00adffff44aeffff82afffffeaafffff42b0ffff82b0ffffdcb0ffff2ab1ffffeeb1ffff1cb4ffff92b5ffffe0b5ffff64b6ffffdcb6ffff26b7ffff78b7ffffecb7ffff52b8ffff02baffff58baffff4ec3ffff0ec4ffff60c4ffffe6c5fffff6c5ffff46c6ffff12c8ffff12caffff20caffff68cafffffacaffff3ccbffffcccfffff3addffffa4e1ffff7ce3ffff16e4ffff08e6fffff0f6ffff40f7ffff6ef8ffff7ef8ffffbef9ffff0cfaffff3afbffffc45c00003e690000826b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -734,14 +734,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 55.455853, y: -35.96089, z: -64.0691}
+    m_Target: {x: 566.5443, y: 228.67961, z: -0.010787234}
     speed: 2
-    m_Value: {x: 55.455853, y: -35.96089, z: -64.0691}
+    m_Value: {x: 578.95056, y: 222.97054, z: 0.11958662}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
       m_Size: {x: 0, y: 0}
     yGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
@@ -778,7 +778,7 @@ MonoBehaviour:
       m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
@@ -788,17 +788,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.040938042, y: 0.9586122, z: -0.21366948, w: 0.18366535}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.040296834, y: 0.9591585, z: -0.21379125, w: 0.18078862}
+    m_Value: {x: -0.000000014901161, y: 0.0000000018626451, z: -2.3283064e-10, w: -1}
   m_Size:
-    m_Target: 331.68344
+    m_Target: 302.7614
     speed: 2
-    m_Value: 317.40042
+    m_Value: 289.72385
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -812,7 +812,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: -0.12891068, y: 0.024389321, z: -0.0031715007, w: -0.9913514}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
