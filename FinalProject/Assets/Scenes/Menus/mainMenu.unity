@@ -1299,7 +1299,7 @@ GameObject:
   - component: {fileID: 1394197551}
   - component: {fileID: 1394197550}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: howToPlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1421,7 +1421,7 @@ GameObject:
   - component: {fileID: 1613768320}
   - component: {fileID: 1613768319}
   m_Layer: 5
-  m_Name: Button
+  m_Name: start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1705,7 +1705,7 @@ GameObject:
   - component: {fileID: 1940032858}
   - component: {fileID: 1940032857}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
