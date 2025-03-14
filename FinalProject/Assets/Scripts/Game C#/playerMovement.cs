@@ -5,8 +5,9 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     //variables related to movement speed
-    public float walkSpeed = 20f;
-    public float runSpeed = 28f;
+    [Header("Movement Speed")]
+    public float walkSpeed = 23f;
+    public float runSpeed = 38f;
     public float jumpPower = 18f;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
@@ -16,21 +17,25 @@ public class playerMovement : MonoBehaviour
     public float gravity = 12f;
 
     //variables related to abilities
+    [Header("Abilities")]
     public float slowfall;
 
-    //variables related to keybinds
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode crouchKey = KeyCode.LeftControl;
-    public KeyCode runKey = KeyCode.LeftShift;
-
-    //variables misc
-    private Vector3 moveDirection = Vector3.zero;
-    private float rotationX = 0;
+    //variables related to camera
+    [Header("Camera")]
     public CharacterController characterController;
     public Camera playerCamera;
     public Transform playerOrientation;
+    private Vector3 moveDirection = Vector3.zero;
+    private float rotationX = 0;
 
+    //misc 
     private bool canMove = true;
+
+    //variables related to keybinds
+    [Header("Keybinds")]
+    public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode runKey = KeyCode.LeftShift;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +74,6 @@ public class playerMovement : MonoBehaviour
         {
             moveDirection.y = jumpPower;
         }
-
         else //if not jumping, reset the value
         {
             moveDirection.y = movementDirectionY;
@@ -87,12 +91,11 @@ public class playerMovement : MonoBehaviour
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
         }
-
         else //if not crouched, reset the values
         {
             characterController.height = defaultHeight;
-            walkSpeed = 20f;
-            runSpeed = 28f;
+            walkSpeed = 23f;
+            runSpeed = 38f;
         }
 
         characterController.Move(moveDirection * Time.deltaTime); //move the character controller
@@ -104,7 +107,6 @@ public class playerMovement : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             //changes the rotation of the player (and consequently the camera because it is a child) to match mouse movement
             playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
-
 
 
             //this changes the camera rotation, so this is what youll prob change for your rework of the camera Christian
