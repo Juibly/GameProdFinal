@@ -28,6 +28,7 @@ public class playerMovement : MonoBehaviour
     private float rotationX = 0;
     public CharacterController characterController;
     public Camera playerCamera;
+    public Transform playerOrientation;
 
     private bool canMove = true;
 
@@ -40,9 +41,22 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
 
+        if (GetComponent<Grappling>().freeze)//for freezing while grappling
+        {
+            moveDirection = Vector3.zero;
+            characterController.Move(Vector3.zero);
+            return;
+        }
+
+        Vector3 forward = playerCamera.transform.forward;
+        Vector3 right = playerCamera.transform.right;
+
+        forward.y = 0;
+        right.y = 0;
+
+        forward.Normalize();
+        right.Normalize();
 
         bool isRunning = Input.GetKey(runKey); //running is true if you hold the button for running
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0; //detect current speed for vertical movement
@@ -89,7 +103,8 @@ public class playerMovement : MonoBehaviour
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed; 
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             //changes the rotation of the player (and consequently the camera because it is a child) to match mouse movement
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
+
 
 
             //this changes the camera rotation, so this is what youll prob change for your rework of the camera Christian
