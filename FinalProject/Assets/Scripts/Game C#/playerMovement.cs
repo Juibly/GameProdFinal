@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
+<<<<<<< Updated upstream
     //variables related to movement speed
     public float walkSpeed = 20f;
     public float runSpeed = 28f;
+=======
+    
+    [Header("Movement Speed")] //variables related to movement speed
+    public float walkSpeed = 23f;
+    public float runSpeed = 38f;
+>>>>>>> Stashed changes
     public float jumpPower = 18f;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
@@ -15,14 +22,35 @@ public class playerMovement : MonoBehaviour
     public float crouchSpeed = 15f;
     public float gravity = 12f;
 
+<<<<<<< Updated upstream
     //variables related to abilities
     public float slowfall;
 
     //variables related to keybinds
+=======
+    
+    [Header("Abilities")] //variables related to abilities
+    public float slowfall;
+
+    
+    [Header("Camera")] //variables related to camera
+    public CharacterController characterController;
+    public Camera playerCamera;
+    public Transform playerOrientation;
+    private Vector3 moveDirection = Vector3.zero;
+    private float rotationX = 0;
+
+    //misc 
+    private bool canMove = true;
+
+    
+    [Header("Keybinds")] //variables related to keybinds
+>>>>>>> Stashed changes
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode runKey = KeyCode.LeftShift;
 
+<<<<<<< Updated upstream
     //variables misc
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
@@ -30,6 +58,8 @@ public class playerMovement : MonoBehaviour
     public Camera playerCamera;
 
     private bool canMove = true;
+=======
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
