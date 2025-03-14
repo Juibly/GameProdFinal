@@ -1,103 +1,119 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    //variables related to movement speed
-    public float walkSpeed = 20f;
-    public float runSpeed = 28f;
-    public float jumpPower = 18f;
-    public float lookSpeed = 2f;
-    public float lookXLimit = 45f;
-    public float defaultHeight = 1f;
-    public float crouchHeight = .5f;
-    public float crouchSpeed = 15f;
-    public float gravity = 12f;
+    [Header("Movement")]
+    public float moveSpeed;
 
-    //variables related to abilities
-    public float slowfall;
+    public float groundDrag;
 
-    //variables related to keybinds
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    bool readyToJump;
+
+    [HideInInspector] public float walkSpeed;
+    [HideInInspector] public float sprintSpeed;
+
+    [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode crouchKey = KeyCode.LeftControl;
-    public KeyCode runKey = KeyCode.LeftShift;
 
-    //variables misc
-    private Vector3 moveDirection = Vector3.zero;
-    private float rotationX = 0;
-    public CharacterController characterController;
-    public Camera playerCamera;
+    [Header("Ground Check")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+    bool grounded;
 
-    private bool canMove = true;
+    public Transform orientation;
 
-    // Start is called before the first frame update
-    void Start()
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 moveDirection;
+
+    Rigidbody rb;
+
+    private void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+
+        readyToJump = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
+        // ground check
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
+        MyInput();
+        SpeedControl();
 
-        bool isRunning = Input.GetKey(runKey); //running is true if you hold the button for running
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0; //detect current speed for vertical movement
-        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0; //detect current speed for horizontal movement
+        // handle drag
+        if (grounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
+    }
 
-        float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded) //if jump is pressed and you can move and are on the ground
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        // when to jump
+        if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
-            moveDirection.y = jumpPower;
-        }
+            readyToJump = false;
 
-        else //if not jumping, reset the value
+            Jump();
+
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+    }
+
+    private void MovePlayer()
+    {
+        // calculate movement direction
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        // on ground
+        if(grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
+        // in air
+        else if(!grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+    }
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        // limit velocity if needed
+        if(flatVel.magnitude > moveSpeed)
         {
-            moveDirection.y = movementDirectionY;
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
 
-        if (!characterController.isGrounded) //if character is in air
-        {
-            //where youd apply the slowfall when you write this Mason
-            moveDirection.y -= gravity * Time.deltaTime; //apply gravity slash friction
-        }
+    private void Jump()
+    {
+        // reset y velocity
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        if (Input.GetKey(crouchKey) && canMove) //if holding crouch and can move
-        {
-            characterController.height = crouchHeight;
-            walkSpeed = crouchSpeed;
-            runSpeed = crouchSpeed;
-        }
-
-        else //if not crouched, reset the values
-        {
-            characterController.height = defaultHeight;
-            walkSpeed = 20f;
-            runSpeed = 28f;
-        }
-
-        characterController.Move(moveDirection * Time.deltaTime); //move the character controller
-
-        if (canMove) //if you can move
-        {
-            //changes rotation X value
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed; 
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            //changes the rotation of the player (and consequently the camera because it is a child) to match mouse movement
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-
-
-            //this changes the camera rotation, so this is what youll prob change for your rework of the camera Christian
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); 
-            
-
-        }
-
-
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+    private void ResetJump()
+    {
+        readyToJump = true;
     }
 }
