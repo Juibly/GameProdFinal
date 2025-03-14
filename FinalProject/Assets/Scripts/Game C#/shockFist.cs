@@ -4,32 +4,73 @@ using UnityEngine;
 
 public class shockFist : MonoBehaviour
 {
-    //Variables
+
+    [Header("Shockfist")] //Variables
+    public bool shockfistActive = false;
+    [SerializeField] GameObject shockfistCollider;
+
+
+    [Header("Keybinds")] //Variables for Keybinds
     public KeyCode shockKey = KeyCode.Mouse0; //left click punch
 
-    //Variables for cooldown/timer on using the shockfist
+
+    [Header("Cooldown Timer")] //Variables for cooldown/timer on using the shockfist
     public bool shockFistCooldown = false;
-    public float cooldownRemaining = 10f;
+    public float timerTime;
+    public float cooldownRemaining;
+
+
+    [Header("Cheats")] //Variables for Cheats
     public bool cheatOn; //if there is cheat that turns off cooldown
+
+
+    //[Header("VFX")] //Variables for VFX
+    //public AudioSource shockfistSource;
+    //Animator playerAnimator;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        shockfistCollider.SetActive(false); // this turns off the shock fist collider on start
+
+        //playerAnimator = gameObject.GetComponent<Animator>(); //get animator for player
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(shockKey))
+        shockfistCollider.SetActive(shockfistActive); // this changes if the collision for shockfist is active or not based on bool
+
+        if (Input.GetKeyDown(shockKey))
         {
-            //play vfx like animation state and audio source
+            if (shockFistCooldown) //if cooldown ongoing
+            {
+                //sound or other cue to show fist didnt happen
+            }
+            if (!shockFistCooldown)
+            {
+                shockfistActive = true; //activates collision for shock fist
+                shockFistCooldown = true; // starts cooldown before you can press again
+
+                //play vfx like animation state and audio source
+                //shockfistSource.Play(); //sound when hitting
+                //playerAnimator.Play(shockfist); //animation when hitting
+            }
 
         }
+
         //timer for cooldown
-        if ((shockFistCooldown) && (cooldownRemaining > 0)) { cooldownRemaining -= Time.deltaTime; } //counts down
-        if ((shockFistCooldown) && (cooldownRemaining <= 0)) { shockFistCooldown = false; } //ends at 0
-        if (!shockFistCooldown) { cooldownRemaining = 10f; } //reset timer
-        if (cheatOn) { shockFistCooldown = false; }
+        if ((shockFistCooldown) && (cooldownRemaining > 0)) //counts down
+        {
+            cooldownRemaining -= Time.deltaTime;
+        }
+        if ((shockFistCooldown) && (cooldownRemaining <= 0)) //ends at 0
+        {
+            shockFistCooldown = false; //cooldown ends
+            shockfistActive = false;
+        }
+        if (!shockFistCooldown) { cooldownRemaining = timerTime; } //reset timer
+        if (cheatOn) { shockFistCooldown = false; } //if cheat is on - cooldown is always off
     }
 }
