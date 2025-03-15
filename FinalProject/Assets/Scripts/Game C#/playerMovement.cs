@@ -24,9 +24,16 @@ public class playerMovement : MonoBehaviour
     [Header("Camera")]
     public CharacterController characterController;
     public Camera playerCamera;
+
+    //variables related to character orientation
+    [Header("Orientation")]
     public Transform playerOrientation;
     private Vector3 moveDirection = Vector3.zero;
-    private float rotationX = 0;
+    [SerializeField] GameObject player;
+    private float rotationX;
+    private float rotationY;
+    public Vector3 movementInput;
+    private float movementAmount;
 
     //misc 
     private bool canMove = true;
@@ -102,17 +109,20 @@ public class playerMovement : MonoBehaviour
 
         if (canMove) //if you can move
         {
-            //changes rotation X value
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed; 
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            //changes rotation XY value
+            rotationX = Input.GetAxis("Horizontal");
+            rotationY = Input.GetAxis("Vertical");
+            movementInput = new Vector3(rotationX, 0, rotationY);
+            movementAmount = (Mathf.Abs(rotationX) + Mathf.Abs(rotationY));
             //changes the rotation of the player (and consequently the camera because it is a child) to match mouse movement
-            playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
-
-
-            //this changes the camera rotation, so this is what youll prob change for your rework of the camera Christian
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); 
+            if(movementAmount > 0)
+            {
+                player.transform.rotation = Quaternion.LookRotation(movementInput);
+            }
             
 
+            // orientation object mason set up
+            playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
         }
 
 

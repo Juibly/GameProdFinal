@@ -3613,6 +3613,8 @@ MonoBehaviour:
   characterController: {fileID: 1286361340}
   playerCamera: {fileID: 1886081087}
   playerOrientation: {fileID: 2118999192}
+  player: {fileID: 1286361335}
+  movementInput: {x: 0, y: 0, z: 0}
   jumpKey: 32
   crouchKey: 306
   runKey: 304
