@@ -105,26 +105,21 @@ public class playerMovement : MonoBehaviour
             runSpeed = 38f;
         }
 
-        characterController.Move(moveDirection * Time.deltaTime); //move the character controller
+        
 
         if (canMove) //if you can move
         {
-            //changes rotation XY value
-            rotationX = Input.GetAxis("Horizontal");
-            rotationY = Input.GetAxis("Vertical");
-            movementInput = new Vector3(rotationX, 0, rotationY);
-            movementAmount = (Mathf.Abs(rotationX) + Mathf.Abs(rotationY));
-            //changes the rotation of the player (and consequently the camera because it is a child) to match mouse movement
-            if(movementAmount > 0)
+            characterController.Move(moveDirection * Time.deltaTime); //move the character controller
+
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") !=0)//changes player rotation based off movedirection magnitude
             {
-                player.transform.rotation = Quaternion.LookRotation(movementInput);
+                player.transform.rotation = Quaternion.LookRotation(new Vector3(moveDirection.x ,0, moveDirection.z));
             }
+            
             
 
             // orientation object mason set up
             playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
         }
-
-
     }
 }
