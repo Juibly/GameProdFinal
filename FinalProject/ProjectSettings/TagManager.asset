@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ShockFist
+  - Grappleable
   layers:
   - Default
   - TransparentFX

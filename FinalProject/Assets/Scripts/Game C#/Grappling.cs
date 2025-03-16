@@ -5,184 +5,219 @@ using UnityEngine;
 public class Grappling : MonoBehaviour
 {
     //references
-    public Transform camera;
-    public Transform handGrab;
-    public LayerMask whatIsGrappleable;
+    public GameObject handGrabPrefab;
     public LineRenderer lr;
+    public Transform playerObj;
+    public Camera camera;
+    public CharacterController characterController;
+    private GameObject handGrab;
 
-    //grapple restraints
-    public float maxGrappleDistance;
-    public float grappleDelayTime;
-    public float overshootYAxis;
-    private Vector3 grapplePoint;
-    public float travelTime = 4f;
-
-    //grapple cooldown
-    public float grapplingCd;
-    private float grapplingCdTimer;
+    //constraints
+    public float maxDistance = 300f;
+    public float grappleSpeed = 200f;
+    public float homingRadius = 50f;
+    public float coneAngle = 20f;
 
     //input
     public KeyCode grappleKey = KeyCode.Q;
 
-    private bool grappling;
+    //states
+    private bool grappling = false;
+    public bool freeze = false;
 
-    private bool canMove = true;
-
-    public bool activeGrapple;
-
-    //for freezing player when grappling
-    public CharacterController controller;
-
-    public bool freeze;
-
-    private bool enableMovementOnNextTouch;
-
-    void Start()
-    {
-        GetComponent<playerMovement>();
-    }
+    private Vector3 grappleDirection;
 
     void Update()
     {
-        if (Input.GetKeyDown(grappleKey)) StartGrapple();
-
-        if (grapplingCdTimer > 0)
-            grapplingCdTimer -= Time.deltaTime;
-
-        if (freeze)
+        if (Input.GetKeyDown(grappleKey) && !grappling)
         {
-            canMove = false;
+            StartGrapple();
         }
-    }
 
-    void LateUpdate()
-    {
-        if (grappling)
+        if (freeze && !grappling)
         {
-            lr.SetPosition(0, handGrab.position);
-            lr.SetPosition(1, grapplePoint);
+            freeze = false;
         }
     }
 
     void StartGrapple()
     {
-        if (grapplingCdTimer > 0 || grappling) return;
+        Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        grappleDirection = ray.direction;
 
-        grappling = true;
+        Vector3 targetPosition = GetTargetPosition(ray.direction, maxDistance, homingRadius);
 
-        freeze = true;
+        if (targetPosition != Vector3.zero)
+        {
+            grappling = true;
+            freeze = true;
+            handGrab = Instantiate(handGrabPrefab, playerObj.position, Quaternion.identity);
+            lr.positionCount = 2;
+            lr.SetPosition(0, playerObj.position);
+            lr.enabled = true;
 
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+            grappleDirection = (targetPosition - playerObj.position).normalized;
+
+            StartCoroutine(MoveHandGrab());
+        }
+    }
+
+    Vector3 GetTargetPosition(Vector3 direction, float maxDistance, float homingRadius)
+    {
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, maxGrappleDistance, whatIsGrappleable))
+        if (Physics.Raycast(playerObj.position, direction, out hit, maxDistance))
         {
-            grapplePoint = hit.point;
-
-            Invoke(nameof(ExecuteGrapple), grappleDelayTime);
-        }
-        else
-        {
-            grapplePoint = camera.position + camera.forward * maxGrappleDistance;
-
-            Invoke(nameof(StopGrapple), grappleDelayTime);
+            if (hit.transform.CompareTag("Grappleable"))
+            {
+                return hit.point;
+            }
         }
 
-        lr.enabled = true;
-        lr.SetPosition(1, grapplePoint);
+        Collider[] hits = Physics.OverlapSphere(playerObj.position + direction * maxDistance, homingRadius);
+
+        Vector3 closestPoint = Vector3.zero;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider hitCollider in hits)
+        {
+            if (hitCollider.CompareTag("Grappleable"))
+            {
+                Vector3 point = hitCollider.transform.position;
+                float distance = Vector3.Distance(playerObj.position, point);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPoint = point;
+                }
+            }
+        }
+
+        if (closestPoint != Vector3.zero)
+        {
+            return closestPoint;
+        }
+
+        Collider[] hitsInCone = Physics.OverlapSphere(playerObj.position, maxDistance);
+
+        closestPoint = Vector3.zero;
+        closestDistance = Mathf.Infinity;
+
+        foreach (Collider hitCollider in hitsInCone)
+        {
+            if (hitCollider.CompareTag("Grappleable"))
+            {
+                Vector3 point = hitCollider.transform.position;
+                Vector3 directionToPoint = (point - playerObj.position).normalized;
+                float angle = Vector3.Angle(direction, directionToPoint);
+
+                if (angle < coneAngle)
+                {
+                    float distance = Vector3.Distance(playerObj.position, point);
+
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestPoint = point;
+                    }
+                }
+            }
+        }
+
+        return closestPoint;
     }
 
-    void ExecuteGrapple()
+
+    IEnumerator MoveHandGrab()
     {
-        freeze = false;
+        float timeSinceMaxDistance = 0f;
 
-        activeGrapple = true;
+        while (true)
+        {
+            RaycastHit hit;
 
-        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+            if (Physics.Raycast(playerObj.position, grappleDirection, out hit, maxDistance))
+            {
+                if (hit.transform.CompareTag("Grappleable"))
+                {
+                    handGrab.transform.position = hit.point;
+                    lr.SetPosition(1, handGrab.transform.position);
+                    yield return new WaitForSeconds(0.1f);
+                    ExecuteGrapple(hit.point);
+                    yield break;
+                }
+                else
+                {
+                    handGrab.transform.position = Vector3.MoveTowards(handGrab.transform.position, playerObj.position + grappleDirection * maxDistance, grappleSpeed * Time.deltaTime);
+                    lr.SetPosition(1, handGrab.transform.position);
+                }
+            }
+            else
+            {
+                handGrab.transform.position = Vector3.MoveTowards(handGrab.transform.position, playerObj.position + grappleDirection * maxDistance, grappleSpeed * Time.deltaTime);
+                lr.SetPosition(1, handGrab.transform.position);
+            }
 
-        float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
-        float highestPointOnArc = Mathf.Clamp(grapplePointRelativeYPos + overshootYAxis, 0f, 5f);
+            if (handGrab != null && Vector3.Distance(handGrab.transform.position, playerObj.position) >= maxDistance)
+            {
+                StopGrapple(handGrab.transform.position);
+                yield break;
+            }
 
-        if (grapplePointRelativeYPos < 0) highestPointOnArc = overshootYAxis;
+            if (Vector3.Distance(handGrab.transform.position, playerObj.position) >= maxDistance)
+            {
+                timeSinceMaxDistance += Time.deltaTime;
 
-        JumpToPosition(grapplePoint, highestPointOnArc);
+                if (timeSinceMaxDistance >= 0.25f)
+                {
+                    StopGrapple(handGrab.transform.position);
+                    yield break;
+                }
+            }
 
-        Invoke(nameof(StopGrapple), 1f);
+            yield return null;
+        }
     }
 
-    void StopGrapple()
+    void StopGrapple(Vector3 grapplePoint)
     {
-        freeze = false;
-
         grappling = false;
-
-        activeGrapple = false;
-
-        grapplingCdTimer = grapplingCd;
-
+        freeze = false;
         lr.enabled = false;
+        lr.positionCount = 0;
+        Destroy(handGrab);
+
+        GetComponent<playerMovement>().movementInput = Vector3.zero;
+        GetComponent<playerMovement>().moveDirection = Vector3.zero;
+
+        GetComponent<playerMovement>().moveDirection.y = -2f;
     }
 
-    void JumpToPosition(Vector3 targetPosition, float travelTime)
+    void ExecuteGrapple(Vector3 grapplePoint)
     {
-        Invoke(nameof(SetVelocity), 0.1f);
+        grappling = false;
+        freeze = false;
+        lr.enabled = false;
+        lr.positionCount = 0;
+        Destroy(handGrab);
 
-        activeGrapple = true;
-        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, travelTime);
+        GetComponent<playerMovement>().movementInput = Vector3.zero;
+        GetComponent<playerMovement>().moveDirection = Vector3.zero;
+
+        GetComponent<playerMovement>().moveDirection.y = -2f;
+
+        StartCoroutine(MovePlayerToGrapplePoint(grapplePoint));
     }
 
-    private Vector3 velocityToSet;
-
-    private void SetVelocity()
+    IEnumerator MovePlayerToGrapplePoint(Vector3 grapplePoint)
     {
-        StartCoroutine(ApplyGrappleMovement());
-    }
-
-    private IEnumerator ApplyGrappleMovement()
-    {
-        float grappleDuration = 1.5f;
-        float elapsedTime = 0f;
-
-        Vector3 startPosition = transform.position;
-
-        while (elapsedTime < grappleDuration)
+        while (Vector3.Distance(playerObj.position, grapplePoint) > 0.1f)
         {
-            float t = elapsedTime / grappleDuration;
-
-            float easedT = Mathf.SmoothStep(0f, 1f, t);
-
-            Vector3 newPosition = Vector3.Lerp(startPosition, grapplePoint, easedT);
-            controller.Move(newPosition - transform.position);
-
-            elapsedTime += Time.deltaTime;
+            characterController.Move((grapplePoint - playerObj.position).normalized * grappleSpeed * Time.deltaTime);
             yield return null;
         }
 
-        activeGrapple = false;
-        enableMovementOnNextTouch = true;
-    }
-
-    public void ResetRestrictions()
-    {
-        activeGrapple = false;
-    }
-
-    void OnCollisionEnter(Collision collsion)
-    {
-        if (enableMovementOnNextTouch)
-        {
-            enableMovementOnNextTouch = false;
-            ResetRestrictions();
-
-            StopGrapple();
-        }
-    }
-
-    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float travelTime)
-    {
-        Vector3 direction = (endPoint - startPoint).normalized;
-        float distance = Vector3.Distance(startPoint, endPoint);
-
-        return direction * (distance / travelTime);
+        characterController.Move((grapplePoint - playerObj.position).normalized * grappleSpeed * Time.deltaTime);
     }
 }

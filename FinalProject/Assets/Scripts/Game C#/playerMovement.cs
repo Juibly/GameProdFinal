@@ -28,14 +28,14 @@ public class playerMovement : MonoBehaviour
     //variables related to character orientation
     [Header("Orientation")]
     public Transform playerOrientation;
-    private Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
     [SerializeField] GameObject player;
     private float rotationX;
     private float rotationY;
     public Vector3 movementInput;
     private float movementAmount;
 
-    //misc 
+    //misc
     private bool canMove = true;
 
     //variables related to keybinds
@@ -81,6 +81,7 @@ public class playerMovement : MonoBehaviour
         {
             moveDirection.y = jumpPower;
         }
+
         else //if not jumping, reset the value
         {
             moveDirection.y = movementDirectionY;
@@ -98,28 +99,32 @@ public class playerMovement : MonoBehaviour
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
         }
+
         else //if not crouched, reset the values
         {
             characterController.height = defaultHeight;
-            walkSpeed = 23f;
-            runSpeed = 38f;
+            walkSpeed = 20f;
+            runSpeed = 28f;
         }
 
-        
+        characterController.Move(moveDirection * Time.deltaTime); //move the character controller
 
         if (canMove) //if you can move
         {
-            characterController.Move(moveDirection * Time.deltaTime); //move the character controller
-
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") !=0)//changes player rotation based off movedirection magnitude
-            {
-                player.transform.rotation = Quaternion.LookRotation(new Vector3(moveDirection.x ,0, moveDirection.z));
-            }
-            
-            
-
-            // orientation object mason set up
+            //changes rotation X value
+            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed; 
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            //changes the rotation of the player (and consequently the camera because it is a child) to match mouse movement
             playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
+
+
+
+            //this changes the camera rotation, so this is what youll prob change for your rework of the camera Christian
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); 
+            
+
         }
+
+
     }
 }
