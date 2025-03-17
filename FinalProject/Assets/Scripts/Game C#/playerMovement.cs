@@ -61,6 +61,12 @@ public class playerMovement : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyUp("escape")) //kyle quit code :3 
+        {
+            Debug.Log($"Quitting App on Escape Key struck.");
+            Application.Quit();
+        }
+
         Vector3 forward = playerCamera.transform.forward;
         Vector3 right = playerCamera.transform.right;
 

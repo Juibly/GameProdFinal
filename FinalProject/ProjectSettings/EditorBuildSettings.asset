@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/hubTutorial.unity
+    guid: 271fef16a9e723244944dcd14c395b72
   m_configObjects: {}
