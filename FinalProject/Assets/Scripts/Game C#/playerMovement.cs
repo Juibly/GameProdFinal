@@ -28,7 +28,7 @@ public class playerMovement : MonoBehaviour
     //variables related to character orientation
     [Header("Orientation")]
     public Transform playerOrientation;
-    private Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
     [SerializeField] GameObject player;
     private float rotationX;
     private float rotationY;
