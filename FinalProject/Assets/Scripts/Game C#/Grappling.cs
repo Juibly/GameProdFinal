@@ -17,6 +17,8 @@ public class Grappling : MonoBehaviour
     public float grappleSpeed = 200f;
     public float homingRadius = 50f;
     public float coneAngle = 20f;
+    private bool grappleOnCooldown = false;
+    public float grappleCooldown = 6.5f;
 
     //input
     public KeyCode grappleKey = KeyCode.Q;
@@ -29,8 +31,9 @@ public class Grappling : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(grappleKey) && !grappling)
+        if (Input.GetKeyDown(grappleKey) && !grappling && !grappleOnCooldown)
         {
+            StartCoroutine(GrappleCooldown());
             StartGrapple();
         }
 
@@ -38,6 +41,13 @@ public class Grappling : MonoBehaviour
         {
             freeze = false;
         }
+    }
+
+    IEnumerator GrappleCooldown()
+    {
+        grappleOnCooldown = true;
+        yield return new WaitForSeconds(grappleCooldown);
+        grappleOnCooldown = false;
     }
 
     void StartGrapple()
