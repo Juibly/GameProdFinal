@@ -18,7 +18,7 @@ public class Grappling : MonoBehaviour
     public float homingRadius = 50f;
     public float coneAngle = 20f;
     private bool grappleOnCooldown = false;
-    public float grappleCooldown = 6.5f;
+    public float grappleCooldown = 5f;
 
     //input
     public KeyCode grappleKey = KeyCode.Q;
@@ -145,8 +145,22 @@ public class Grappling : MonoBehaviour
 
         while (true)
         {
-            RaycastHit hit;
+            Vector3 nextPosition = handGrab.transform.position + grappleDirection * grappleSpeed * Time.deltaTime;
+            RaycastHit obstacleHit;
 
+            if (Physics.Raycast(handGrab.transform.position, grappleDirection, out obstacleHit, grappleSpeed * Time.deltaTime))
+            {
+                if (!obstacleHit.transform.CompareTag("Grappleable"))
+                {
+                    StopGrapple(handGrab.transform.position);
+                    yield break;
+                }
+            }
+
+            handGrab.transform.position = nextPosition;
+            lr.SetPosition(1, handGrab.transform.position);
+
+            RaycastHit hit;
             if (Physics.Raycast(playerObj.position, grappleDirection, out hit, maxDistance))
             {
                 if (hit.transform.CompareTag("Grappleable"))
@@ -157,33 +171,21 @@ public class Grappling : MonoBehaviour
                     ExecuteGrapple(hit.point);
                     yield break;
                 }
-                else
-                {
-                    handGrab.transform.position = Vector3.MoveTowards(handGrab.transform.position, playerObj.position + grappleDirection * maxDistance, grappleSpeed * Time.deltaTime);
-                    lr.SetPosition(1, handGrab.transform.position);
-                }
-            }
-            else
-            {
-                handGrab.transform.position = Vector3.MoveTowards(handGrab.transform.position, playerObj.position + grappleDirection * maxDistance, grappleSpeed * Time.deltaTime);
-                lr.SetPosition(1, handGrab.transform.position);
-            }
-
-            if (handGrab != null && Vector3.Distance(handGrab.transform.position, playerObj.position) >= maxDistance)
-            {
-                StopGrapple(handGrab.transform.position);
-                yield break;
             }
 
             if (Vector3.Distance(handGrab.transform.position, playerObj.position) >= maxDistance)
             {
                 timeSinceMaxDistance += Time.deltaTime;
-
                 if (timeSinceMaxDistance >= 0.25f)
                 {
                     StopGrapple(handGrab.transform.position);
                     yield break;
                 }
+            }
+
+            if (!grappling)
+            {
+                yield break;
             }
 
             yield return null;
