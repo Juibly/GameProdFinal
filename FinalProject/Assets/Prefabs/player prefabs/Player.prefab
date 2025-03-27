@@ -291,6 +291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46a51f6bba086940ab1a6e4c08fe82b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 6020195558618787647}
+  checkpointCords: {x: 0, y: 0, z: 0}
 --- !u!120 &6020195558618787638
 LineRenderer:
   m_ObjectHideFlags: 0
