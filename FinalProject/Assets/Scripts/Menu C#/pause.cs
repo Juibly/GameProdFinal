@@ -9,27 +9,34 @@ public class pause : MonoBehaviour
     public GameObject pMenu;
     public bool isPause;
 
-      private GameManager gameManager;
-
-    // Start is called before the first frame update
+    // pause menu is off when game starts
     void Start()
     {
         pMenu.SetActive(false);
         isPause = false;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        //PRESS TO PAUSE
+        if (Input.GetKeyDown(KeyCode.Escape)){
             pauseGame();
+        }
+
+    //checks bool, allowing menu access if pause
+         if (isPause == true) {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else {
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
     public void pauseGame()
     {
+        //pauses game activity and turns menu on
+        Time.timeScale = 0f;
         pMenu.SetActive(true);
         isPause = true;
 
@@ -37,13 +44,28 @@ public class pause : MonoBehaviour
 
     public void resumeGame()
     {
+//resumes game activity, turning menu off
         pMenu.SetActive(false);
         isPause = false;
+        Time.timeScale = 1f;
+
     }
     public void goMainMenu()
     {
         SceneManager.LoadScene(0);
     }
+
+    public void howToPlay(){
+        SceneManager.LoadScene(2);
+    }
+
+    public void settings(){
+        SceneManager.LoadScene(3);
+    }
+    public void quit(){
+        Application.Quit();
+    }
+
 
 }
 

@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/howToPlay.unity
     guid: b62a9ea1511446c4ab32a0dbd528fbd0
+  - enabled: 1
+    path: Assets/Scenes/Menus/optionsMenu.unity
+    guid: b73b3eb660d7d9044b024675a81e6e06
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/rooftopLevel.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/winScreen.unity
+    guid: 7cc527c22b9e6dd489432d01080dc969
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/loseScreen.unity
+    guid: dd1396f23ab6e7b40874a5eb57c6be9e
   m_configObjects: {}
