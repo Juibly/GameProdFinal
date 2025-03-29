@@ -15,10 +15,15 @@ public class doorTrigger : MonoBehaviour
     public Vector3 openPos; //set position for when open
     public Vector3 closePos; //set position for when closed
 
+    [Header("Lever")]
+    public bool onOff; //bool for switching the levers animation state
+    [SerializeField] GameObject whatAmI; //see if the item that is the source of the script is a lever or a powerbox 
+
     // Start is called before the first frame update
     void Start()
     {
         door.transform.position = closePos; //at start door is closed
+        onOff = false; // lever turned off at start
     }
 
 
@@ -41,9 +46,21 @@ public class doorTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("ShockFist"))
+        if (other.gameObject.CompareTag("ShockFist")) // powered by shockfist ability
         {
-            isPowered = !isPowered;
+            if (whatAmI.CompareTag("ElectricalBox")) // is this a electrical box
+            {
+                isPowered = !isPowered;
+            }
+        }
+
+        if (other.gameObject.CompareTag("PickUp")) // pressing pick up
+        {
+            if(whatAmI.CompareTag("Lever")) // is this a lever
+            {
+                isPowered = !isPowered;
+                onOff = !onOff;
+            }
         }
     }
 }

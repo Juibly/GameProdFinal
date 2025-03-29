@@ -6,6 +6,9 @@ TagManager:
   tags:
   - ShockFist
   - Grappleable
+  - Lever
+  - PickUp
+  - ElectricalBox
   layers:
   - Default
   - TransparentFX
