@@ -48,6 +48,7 @@ public class pause : MonoBehaviour
         pMenu.SetActive(false);
         isPause = false;
         Time.timeScale = 1f;
+        Cursor.visible = false;
 
     }
     public void goMainMenu()
