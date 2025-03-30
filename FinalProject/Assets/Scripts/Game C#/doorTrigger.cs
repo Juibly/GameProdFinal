@@ -7,6 +7,7 @@ public class doorTrigger : MonoBehaviour
     [Header("Door")] //Variables
     public bool isPowered;
     [SerializeField] GameObject door;
+    public AudioSource LeverSource;
 
 
     [Header("Door Movement")] //Variables for opening and closing door
@@ -60,6 +61,7 @@ public class doorTrigger : MonoBehaviour
             {
                 isPowered = !isPowered;
                 onOff = !onOff;
+                LeverSource.Play();
             }
         }
     }

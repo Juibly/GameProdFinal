@@ -29,11 +29,14 @@ public class Grappling : MonoBehaviour
 
     private Vector3 grappleDirection;
 
+    public AudioSource GrappleSource;
+
     void Update()
     {
         if (Input.GetKeyDown(grappleKey) && !grappling && !grappleOnCooldown)
         {
             StartCoroutine(GrappleCooldown());
+            GrappleSource.Play();
             StartGrapple();
         }
 
