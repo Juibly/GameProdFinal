@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class pause : MonoBehaviour
+{
+    //holds ingame pause canvas
+    public GameObject pMenu;
+    public bool isPause;
+
+    // pause menu is off when game starts
+    void Start()
+    {
+        pMenu.SetActive(false);
+        isPause = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //PRESS TO PAUSE
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            pauseGame();
+        }
+
+    //checks bool, allowing menu access if pause
+         if (isPause == true) {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    public void pauseGame()
+    {
+        //pauses game activity and turns menu on
+        Time.timeScale = 0f;
+        pMenu.SetActive(true);
+        isPause = true;
+
+    }
+
+    public void resumeGame()
+    {
+//resumes game activity, turning menu off
+        pMenu.SetActive(false);
+        isPause = false;
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+
+    }
+    public void goMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void howToPlay(){
+        SceneManager.LoadScene(2);
+    }
+
+    public void settings(){
+        SceneManager.LoadScene(3);
+    }
+    public void quit(){
+        Application.Quit();
+    }
+
+
+}
+
+
