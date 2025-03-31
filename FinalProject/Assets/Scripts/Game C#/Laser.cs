@@ -8,7 +8,6 @@ public class Laser : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private float laserDistance = 8f;
     [SerializeField] private LayerMask ignoreMask;
-    [SerializeField] private UnityEvent OnHitTarget;
 
     private RaycastHit rayHit;
     private Ray ray;
@@ -31,7 +30,6 @@ public class Laser : MonoBehaviour
             if (rayHit.collider.TryGetComponent(out Target target))
             {
                 target.Hit();
-                OnHitTarget?.Invoke();
             }
         }
         else

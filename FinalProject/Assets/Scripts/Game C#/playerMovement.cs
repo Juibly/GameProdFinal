@@ -19,6 +19,7 @@ public class playerMovement : MonoBehaviour
     //variables related to abilities
     [Header("Abilities")]
     public float slowfall;
+    public bool shieldUp = false;
 
     //variables related to camera
     [Header("Camera")]
@@ -36,7 +37,7 @@ public class playerMovement : MonoBehaviour
     private float movementAmount;
 
     //misc 
-    private bool canMove = true;
+    public bool canMove = true;
 
     //variables related to keybinds
     [Header("Keybinds")]
@@ -117,11 +118,14 @@ public class playerMovement : MonoBehaviour
         {
             characterController.Move(moveDirection * Time.deltaTime); //move the character controller
 
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)//changes player rotation based off movedirection magnitude
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && shieldUp == false)//changes player rotation based off movedirection magnitude
             {
                 player.transform.rotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.z));
             }
-
+            if (shieldUp == true)
+            {
+                player.transform.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
+            }
 
 
             // orientation object mason set up

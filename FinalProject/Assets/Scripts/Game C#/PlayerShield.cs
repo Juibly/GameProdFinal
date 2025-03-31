@@ -6,7 +6,12 @@ public class PlayerShield : MonoBehaviour
 {
     [SerializeField] private GameObject Shield;
 
+    [SerializeField] private GameObject player;
+
     [SerializeField] private KeyCode shieldKey = KeyCode.Mouse1;
+
+    public AudioSource ShieldUpSource;
+    public AudioSource ShieldDownSource;
 
     // Start is called before the first frame update
     private void Start()
@@ -19,11 +24,15 @@ public class PlayerShield : MonoBehaviour
     {
         if (Input.GetKeyDown(shieldKey))
         {
+            player.GetComponent<playerMovement>().shieldUp = true;
             Shield.SetActive(true);
+            ShieldUpSource.Play();
         }
         else if(Input.GetKeyUp(shieldKey))
         {
+            player.GetComponent<playerMovement>().shieldUp = false;
             Shield.SetActive(false);
+            ShieldDownSource.Play();
         }
     }
 }

@@ -7,6 +7,7 @@ public class doorTrigger : MonoBehaviour
     [Header("Door")] //Variables
     public bool isPowered;
     [SerializeField] GameObject door;
+    public AudioSource LeverSource;
 
 
     [Header("Door Movement")] //Variables for opening and closing door
@@ -36,11 +37,13 @@ public class doorTrigger : MonoBehaviour
         {
             //door position open
             door.transform.position = Vector3.MoveTowards(door.transform.position, openPos, step);
+            //turn lever into on position
         }
         if (!isPowered)
         {
             //door position closed
             door.transform.position = Vector3.MoveTowards(door.transform.position, closePos, step);
+            //turn lever into off position
         }
     }
 
@@ -60,6 +63,7 @@ public class doorTrigger : MonoBehaviour
             {
                 isPowered = !isPowered;
                 onOff = !onOff;
+                LeverSource.Play();
             }
         }
     }
