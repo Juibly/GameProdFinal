@@ -34,7 +34,9 @@ public class mainMenu : MonoBehaviour
         Application.Quit();
     }
 
-
+ public void playRooftop(){
+        SceneManager.LoadScene(4);
+    }
 
 }
 
