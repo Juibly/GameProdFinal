@@ -247,7 +247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &66868972
 RectTransform:
   m_ObjectHideFlags: 0
@@ -460,7 +460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &145419784
 Transform:
   m_ObjectHideFlags: 0
@@ -991,7 +991,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &422940437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2858,7 +2858,7 @@ GameObject:
   - component: {fileID: 1468282342}
   - component: {fileID: 1468282341}
   m_Layer: 5
-  m_Name: aButton
+  m_Name: yButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2904,7 +2904,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 87112af4a70bf514187798b278baceaf, type: 3}
+  m_Texture: {fileID: 2800000, guid: 1a64e80d150cd9c45a0ff94dd66591a0, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3553,7 +3553,7 @@ MonoBehaviour:
     Right Control Stick to
     move camera
 
-    A button to jump
+    Y button to jump
 
 '
   m_isRightToLeft: 0
