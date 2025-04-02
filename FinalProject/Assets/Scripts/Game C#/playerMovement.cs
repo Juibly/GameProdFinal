@@ -6,14 +6,14 @@ public class playerMovement : MonoBehaviour
 {
     //variables related to movement speed
     [Header("Movement Speed")]
-    public float walkSpeed = 23f;
-    public float runSpeed = 38f;
-    public float jumpPower = 18f;
+    public float walkSpeed = 38f;
+    public float runSpeed = 58f;
+    public float jumpPower = 22f;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
     public float defaultHeight = 1f;
     public float crouchHeight = .5f;
-    public float crouchSpeed = 15f;
+    public float crouchSpeed = 35f;
     public float gravity = 12f;
 
     //variables related to abilities
@@ -108,8 +108,8 @@ public class playerMovement : MonoBehaviour
         else //if not crouched, reset the values
         {
             characterController.height = defaultHeight;
-            walkSpeed = 23f;
-            runSpeed = 38f;
+            walkSpeed = 38f;
+            runSpeed = 58f;
         }
 
 

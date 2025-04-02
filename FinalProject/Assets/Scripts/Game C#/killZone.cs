@@ -6,8 +6,10 @@ public class killZone : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("player in killzone");
-        other.gameObject.GetComponent<Target>().Hit();
-        
+        if(other.CompareTag("Player"))
+        {
+            Debug.Log("Player in killzone");
+            other.GetComponent<Target>().Hit();
+        } 
     }
 }

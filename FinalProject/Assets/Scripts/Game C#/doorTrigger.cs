@@ -37,13 +37,11 @@ public class doorTrigger : MonoBehaviour
         {
             //door position open
             door.transform.position = Vector3.MoveTowards(door.transform.position, openPos, step);
-            //turn lever into on position
         }
         if (!isPowered)
         {
             //door position closed
             door.transform.position = Vector3.MoveTowards(door.transform.position, closePos, step);
-            //turn lever into off position
         }
     }
 
@@ -64,6 +62,9 @@ public class doorTrigger : MonoBehaviour
                 isPowered = !isPowered;
                 onOff = !onOff;
                 LeverSource.Play();
+                //flip lever
+                if (isPowered) { whatAmI.transform.Rotate(0.0f, 180.0f, 0.0f, Space.Self); }
+                if (!isPowered) { whatAmI.transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self); }
             }
         }
     }

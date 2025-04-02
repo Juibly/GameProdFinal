@@ -14,21 +14,13 @@ public class leverLaser : MonoBehaviour
     void Start()
     {
         laser.SetActive(true); //lasers are on at start 
-        isPowered = false; //lever is off at start
+        isPowered = true; //laser is on at start
     }
 
     // Update is called once per frame
     void Update()
     {
         laser.SetActive(isPowered); //update lasers based on power to lever
-        if(isPowered)
-        {
-            //turn lever in on position
-        }
-        if(!isPowered)
-        {
-            //turn lever in off position
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +29,9 @@ public class leverLaser : MonoBehaviour
         {
             isPowered = !isPowered; //turn power on/off
             LeverSource.Play(); //play vfx if flipped
+            //flip lever
+            if (isPowered) { lever.transform.Rotate(0.0f, 180.0f, 0.0f, Space.Self); }
+            if (!isPowered) { lever.transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self); }
         }
     }
 }
