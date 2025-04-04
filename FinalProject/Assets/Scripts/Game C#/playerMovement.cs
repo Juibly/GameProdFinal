@@ -12,8 +12,6 @@ public class playerMovement : MonoBehaviour
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
     public float defaultHeight = 2f;
-    public float crouchHeight = 1f;
-    public float crouchSpeed = 35f;
     public float gravity = 12f;
 
     //variables related to abilities
@@ -43,7 +41,6 @@ public class playerMovement : MonoBehaviour
     //variables related to keybinds
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode runKey = KeyCode.LeftShift;
     public KeyCode forwardKey = KeyCode.W;
     public KeyCode leftKey = KeyCode.A;
@@ -108,19 +105,6 @@ public class playerMovement : MonoBehaviour
         {
             //where youd apply the slowfall when you write this Mason
             moveDirection.y -= gravity * Time.deltaTime; //apply gravity slash friction
-        }
-
-        if (Input.GetKey(crouchKey) && canMove) //if holding crouch and can move
-        {
-            characterController.height = crouchHeight;
-            walkSpeed = crouchSpeed;
-            runSpeed = crouchSpeed;
-        }
-        else //if not crouched, reset the values
-        {
-            characterController.height = defaultHeight;
-            walkSpeed = 38f;
-            runSpeed = 58f;
         }
 
         // dumb hard coding in animations trigger, if it works it works amirite - kyle

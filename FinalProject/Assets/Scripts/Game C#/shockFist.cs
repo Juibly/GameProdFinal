@@ -43,7 +43,7 @@ public class shockFist : MonoBehaviour
     {
         shockfistCollider.SetActive(shockfistActive); // this changes if the collision for shockfist is active or not based on bool
 
-        if (Input.GetKeyDown(shockKey))
+        if (Input.GetButtonDown("Shockfist"))
         {
             if (shockFistCooldown) //if cooldown ongoing
             {
