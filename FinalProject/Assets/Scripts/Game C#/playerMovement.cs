@@ -38,17 +38,24 @@ public class playerMovement : MonoBehaviour
 
     //misc 
     public bool canMove = true;
+    private Animator animator; // kyle animator
 
     //variables related to keybinds
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode runKey = KeyCode.LeftShift;
+    public KeyCode forwardKey = KeyCode.W;
+    public KeyCode leftKey = KeyCode.A;
+    public KeyCode backKey = KeyCode.S;
+    public KeyCode rightKey = KeyCode.D;
+    public KeyCode shockKey = KeyCode.Mouse0;
+    public KeyCode grappleKey = KeyCode.Q;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        animator = GetComponent<Animator>(); //acquire animations
     }
 
     // Update is called once per frame
@@ -67,6 +74,8 @@ public class playerMovement : MonoBehaviour
             Debug.Log($"Quitting App on Escape Key struck.");
             Application.Quit();
         }
+
+
 
         Vector3 forward = playerCamera.transform.forward;
         Vector3 right = playerCamera.transform.right;
@@ -87,10 +96,12 @@ public class playerMovement : MonoBehaviour
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded) //if jump is pressed and you can move and are on the ground
         {
             moveDirection.y = jumpPower;
+            
         }
         else //if not jumping, reset the value
         {
             moveDirection.y = movementDirectionY;
+            
         }
 
         if (!characterController.isGrounded) //if character is in air
@@ -112,6 +123,64 @@ public class playerMovement : MonoBehaviour
             runSpeed = 58f;
         }
 
+        // dumb hard coding in animations trigger, if it works it works amirite - kyle
+        if (Input.GetButton("Jump"))
+        {
+            animator.SetBool("hasjumped", true);
+        }
+        else
+        {
+            animator.SetBool("hasjumped", false);
+        }
+        if (Input.GetKey(forwardKey))
+        {
+            animator.SetBool("SWforward", true);
+        }
+        else
+        {
+            animator.SetBool("SWforward", false);
+        }
+        if (Input.GetKey(leftKey))
+        {
+            animator.SetBool("SWleft", true);
+        }
+        else
+        {
+            animator.SetBool("SWleft", false);
+        }
+        if (Input.GetKey(rightKey))
+        {
+            animator.SetBool("SWright", true);
+        }
+        else
+        {
+            animator.SetBool("SWright", false);
+        }
+        if (Input.GetKey(backKey))
+        {
+            animator.SetBool("SWback", true);
+        }
+        else
+        {
+            animator.SetBool("SWback", false);
+        }
+        if (Input.GetKeyDown(shockKey))
+        {
+            animator.SetBool("haspunched", true);
+        }
+        else
+        {
+            animator.SetBool("haspunched", false);
+        }
+        if (Input.GetKeyDown(grappleKey))
+        {
+            animator.SetBool("hasgrabbled", true);
+        }
+        else
+        {
+            animator.SetBool("hasgrabbled", false);
+        }
+
 
 
         if (canMove) //if you can move
@@ -121,12 +190,30 @@ public class playerMovement : MonoBehaviour
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && shieldUp == false)//changes player rotation based off movedirection magnitude
             {
                 player.transform.rotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.z));
+                animator.SetBool("iswalking", true);
+                if (isRunning == true) 
+                {
+                    animator.SetBool("isrunning", true);
+                }
+                else
+                {
+                    animator.SetBool("isrunning", false);
+                }
+                
+            }
+            else
+            {
+                animator.SetBool("iswalking", false);
             }
             if (shieldUp == true)
             {
                 player.transform.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
+                animator.SetBool("hasshield", true);
             }
-
+            else
+            {
+                animator.SetBool("hasshield", false);
+            }
 
             // orientation object mason set up
             playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
