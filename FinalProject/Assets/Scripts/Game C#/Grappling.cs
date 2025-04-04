@@ -33,7 +33,7 @@ public class Grappling : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(grappleKey) && !grappling && !grappleOnCooldown)
+        if (Input.GetButtonDown("Grapple") && !grappling && !grappleOnCooldown)
         {
             StartCoroutine(GrappleCooldown());
             GrappleSource.Play();

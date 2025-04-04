@@ -22,16 +22,17 @@ public class PlayerShield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(shieldKey))
+        if(Input.GetButtonDown("Shield")) { ShieldUpSource.Play(); } //on frame you open shield play sound
+        if (Input.GetButton("Shield")) //while holding button shield is up
         {
             player.GetComponent<playerMovement>().shieldUp = true;
             Shield.SetActive(true);
-            ShieldUpSource.Play();
         }
-        else if(Input.GetKeyUp(shieldKey))
+        else if(Input.GetButtonUp("Shield")) //on frame you release shield button
         {
             player.GetComponent<playerMovement>().shieldUp = false;
             Shield.SetActive(false);
+            ShieldUpSource.Stop(); // stop sound from putting shield up if the shield is being put down
             ShieldDownSource.Play();
         }
     }

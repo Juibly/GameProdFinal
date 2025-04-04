@@ -26,7 +26,7 @@ public class pause : MonoBehaviour
     void Update()
     {
         //PRESS TO PAUSE
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetButtonDown("Cancel")){
             pauseGame();
         }
 

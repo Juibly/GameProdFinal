@@ -40,6 +40,7 @@ public class timer : MonoBehaviour
         //you lose screen
         if(timerTime <= 0)
         {
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene(6);
         }
     }

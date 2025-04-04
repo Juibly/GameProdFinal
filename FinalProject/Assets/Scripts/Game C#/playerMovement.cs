@@ -39,15 +39,13 @@ public class playerMovement : MonoBehaviour
     private Animator animator; // kyle animator
 
     //variables related to keybinds
-    [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode runKey = KeyCode.LeftShift;
-    public KeyCode forwardKey = KeyCode.W;
-    public KeyCode leftKey = KeyCode.A;
-    public KeyCode backKey = KeyCode.S;
-    public KeyCode rightKey = KeyCode.D;
-    public KeyCode shockKey = KeyCode.Mouse0;
-    public KeyCode grappleKey = KeyCode.Q;
+    [Header("Animation")]
+    public bool DForward; //Direction Forward
+    public bool DBackward; //Direction Backward
+    public bool DLeft; //Direction Left
+    public bool DRight; //Direction Right
+    public bool hasPunched; // is shockfist pressed
+    public bool hasGrappled; // is grapple pressed
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +64,7 @@ public class playerMovement : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyUp("escape")) //kyle quit code :3 
+        if (Input.GetButtonDown("Cancel")) //kyle quit code :3 
         {
             Debug.Log($"Quitting App on Escape Key struck.");
             Application.Quit();
@@ -83,7 +81,7 @@ public class playerMovement : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        bool isRunning = Input.GetKey(runKey); //running is true if you hold the button for running
+        bool isRunning = Input.GetButton("Run"); //running is true if you hold the button for running
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0; //detect current speed for vertical movement
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0; //detect current speed for horizontal movement
 
@@ -93,12 +91,13 @@ public class playerMovement : MonoBehaviour
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded) //if jump is pressed and you can move and are on the ground
         {
             moveDirection.y = jumpPower;
-            
+            animator.SetBool("hasjumped", true); // turn on animation for jump
+
         }
         else //if not jumping, reset the value
         {
             moveDirection.y = movementDirectionY;
-            
+            animator.SetBool("hasjumped", false); // turn off animation for jump
         }
 
         if (!characterController.isGrounded) //if character is in air
@@ -107,64 +106,45 @@ public class playerMovement : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime; //apply gravity slash friction
         }
 
-        // dumb hard coding in animations trigger, if it works it works amirite - kyle
-        if (Input.GetButton("Jump"))
+        // movement animation bools
+        if(Input.GetAxis("Vertical") > 0) //if vertical movement is positive
         {
-            animator.SetBool("hasjumped", true);
+            DForward = true; //facing forward true
+            DBackward = false; //facing backward false
         }
-        else
+        else if(Input.GetAxis("Vertical") < 0) //if vertical movement is negative
         {
-            animator.SetBool("hasjumped", false);
+            DForward = false; //facing forward false
+            DBackward = true; //facing backward true
         }
-        if (Input.GetKey(forwardKey))
-        {
-            animator.SetBool("SWforward", true);
-        }
-        else
-        {
-            animator.SetBool("SWforward", false);
-        }
-        if (Input.GetKey(leftKey))
-        {
-            animator.SetBool("SWleft", true);
-        }
-        else
-        {
-            animator.SetBool("SWleft", false);
-        }
-        if (Input.GetKey(rightKey))
-        {
-            animator.SetBool("SWright", true);
-        }
-        else
-        {
-            animator.SetBool("SWright", false);
-        }
-        if (Input.GetKey(backKey))
-        {
-            animator.SetBool("SWback", true);
-        }
-        else
-        {
-            animator.SetBool("SWback", false);
-        }
-        if (Input.GetKeyDown(shockKey))
-        {
-            animator.SetBool("haspunched", true);
-        }
-        else
-        {
-            animator.SetBool("haspunched", false);
-        }
-        if (Input.GetKeyDown(grappleKey))
-        {
-            animator.SetBool("hasgrabbled", true);
-        }
-        else
-        {
-            animator.SetBool("hasgrabbled", false);
-        }
+        else { DForward = false; DBackward = false; } //if no vertical movement, neither is true
 
+        if (Input.GetAxis("Horizontal") > 0) //if horizontal movement is positive
+        {
+            DRight = true; //facing right true
+            DLeft = false; //facing left false
+        }
+        else if (Input.GetAxis("Horizontal") < 0) //if horizontal movement is negative
+        {
+            DRight = false; //facing right false
+            DLeft = true; //facing left true
+        }
+        else { DRight = false; DLeft = false; } //if no horizontal movement, neither is true
+
+        // ability animation bools
+        if(Input.GetButtonDown("Shockfist")) { hasPunched = true; } //if press shockfist button, bool is true
+        else { hasPunched = false; } //else it is false
+
+        if (Input.GetButtonDown("Grapple")) { hasGrappled = true; } //if press grapple button, bool is true
+        else { hasGrappled = false; } //else it is false
+
+        //Animator Bools set to update to whatever the bool is
+        animator.SetBool("SWforward", DForward);
+        animator.SetBool("SWback", DBackward);
+        animator.SetBool("SWleft", DLeft);
+        animator.SetBool("SWright", DRight);
+        animator.SetBool("haspunched", hasPunched);
+        animator.SetBool("hasgrabbled", hasGrappled);
 
 
         if (canMove) //if you can move
