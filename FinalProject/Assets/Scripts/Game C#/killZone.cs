@@ -9,7 +9,7 @@ public class killZone : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             Debug.Log("Player in killzone");
-            other.GetComponent<Target>().Hit();
-        } 
+            other.gameObject.GetComponent<Target>().Hit();
+        }
     }
 }
