@@ -10,6 +10,7 @@ public class killZone : MonoBehaviour
         {
             Debug.Log("Player in killzone");
             other.gameObject.GetComponent<Target>().Hit();
+
         }
     }
 }

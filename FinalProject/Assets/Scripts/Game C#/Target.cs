@@ -9,6 +9,7 @@ public class Target : MonoBehaviour
 
     public void Hit()
     {
+        Debug.Log("Hit Ran");
         player.transform.position = checkpointCords;
     }
 }
