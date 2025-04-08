@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Grappling : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Grappling : MonoBehaviour
     public Camera camera;
     public CharacterController characterController;
     private GameObject handGrab;
+    public TextMeshProUGUI grappleText;
 
     //constraints
     public float maxDistance = 300f;
@@ -40,10 +42,32 @@ public class Grappling : MonoBehaviour
             StartGrapple();
         }
 
+        bool grappleableObjectInRange = IsGrappleableObjectInRange();
+
+        grappleText.enabled = grappleableObjectInRange;
+
         if (freeze && !grappling)
         {
             freeze = false;
         }
+    }
+
+    bool IsGrappleableObjectInRange()
+    {
+        Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Vector3 direction = ray.direction;
+
+        Collider[] hits = Physics.OverlapSphere(playerObj.position + direction * maxDistance, homingRadius);
+
+        foreach (Collider hitCollider in hits)
+        {
+            if (hitCollider.CompareTag("Grappleable"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     IEnumerator GrappleCooldown()
