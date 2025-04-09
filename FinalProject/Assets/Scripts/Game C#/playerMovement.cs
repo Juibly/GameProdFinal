@@ -46,6 +46,9 @@ public class playerMovement : MonoBehaviour
     public bool DRight; //Direction Right
     public bool hasPunched; // is shockfist pressed
     public bool hasGrappled; // is grapple pressed
+    public bool jumping; // is jumping PRESSED
+    public bool isRunning; // is player running
+    public bool isWalking; // is player walking
 
     // Start is called before the first frame update
     void Start()
@@ -64,14 +67,6 @@ public class playerMovement : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Cancel")) //kyle quit code :3 
-        {
-            Debug.Log($"Quitting App on Escape Key struck.");
-            Application.Quit();
-        }
-
-
-
         Vector3 forward = playerCamera.transform.forward;
         Vector3 right = playerCamera.transform.right;
 
@@ -81,26 +76,28 @@ public class playerMovement : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        bool isRunning = Input.GetButton("Run"); //running is true if you hold the button for running
+        isRunning = Input.GetButton("Run"); //running is true if you hold the button for running
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0; //detect current speed for vertical movement
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0; //detect current speed for horizontal movement
 
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded) //if jump is pressed and you can move and are on the ground
+        if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded) { jumping = true; } //turn on jump animation the frame the button is PRESSED
+        
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded) //if jump is HELD and you can move and are on the ground
         {
             moveDirection.y = jumpPower;
-            animator.SetBool("hasjumped", true); // turn on animation for jump
-
         }
         else //if not jumping, reset the value
         {
             moveDirection.y = movementDirectionY;
-            animator.SetBool("hasjumped", false); // turn off animation for jump
+            jumping = false; // turn off animation
         }
 
-        if (!characterController.isGrounded) //if character is in air
+        
+
+            if (!characterController.isGrounded) //if character is in air
         {
             //where youd apply the slowfall when you write this Mason
             moveDirection.y -= gravity * Time.deltaTime; //apply gravity slash friction
@@ -130,9 +127,12 @@ public class playerMovement : MonoBehaviour
             DLeft = true; //facing left true
         }
         else { DRight = false; DLeft = false; } //if no horizontal movement, neither is true
+        if(isRunning) { isWalking = false; } // if running, walking is false
+        if (!isRunning && (Input.GetAxis("Vertical") == 0) && (Input.GetAxis("Horizontal") == 0)) { isWalking = false; } // if not running but no movement input then walking is false
+        else { isWalking = true; } // else walking is true
 
         // ability animation bools
-        if(Input.GetButtonDown("Shockfist")) { hasPunched = true; } //if press shockfist button, bool is true
+        if (Input.GetButtonDown("Shockfist")) { hasPunched = true; } //if press shockfist button, bool is true
         else { hasPunched = false; } //else it is false
 
         if (Input.GetButtonDown("Grapple")) { hasGrappled = true; } //if press grapple button, bool is true
@@ -145,6 +145,10 @@ public class playerMovement : MonoBehaviour
         animator.SetBool("SWright", DRight);
         animator.SetBool("haspunched", hasPunched);
         animator.SetBool("hasgrabbled", hasGrappled);
+        animator.SetBool("hasjumped", jumping);
+        animator.SetBool("hasshield", shieldUp);
+        animator.SetBool("isrunning", isRunning);
+        animator.SetBool("iswalking", isWalking);
 
 
         if (canMove) //if you can move
@@ -154,31 +158,12 @@ public class playerMovement : MonoBehaviour
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && shieldUp == false)//changes player rotation based off movedirection magnitude
             {
                 player.transform.rotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.z));
-                animator.SetBool("iswalking", true);
-                if (isRunning == true) 
-                {
-                    animator.SetBool("isrunning", true);
-                }
-                else
-                {
-                    animator.SetBool("isrunning", false);
-                }
-                
-            }
-            else
-            {
-                animator.SetBool("iswalking", false);
             }
             if (shieldUp == true)
             {
                 player.transform.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
-                animator.SetBool("hasshield", true);
             }
-            else
-            {
-                animator.SetBool("hasshield", false);
-            }
-
+            
             // orientation object mason set up
             playerOrientation.rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0);
         }

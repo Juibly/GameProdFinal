@@ -8,7 +8,7 @@ public class PlayerShield : MonoBehaviour
 
     [SerializeField] private GameObject player;
 
-    [SerializeField] private KeyCode shieldKey = KeyCode.Mouse1;
+    //[SerializeField] private KeyCode shieldKey = KeyCode.Mouse1;
 
     public AudioSource ShieldUpSource;
     public AudioSource ShieldDownSource;
