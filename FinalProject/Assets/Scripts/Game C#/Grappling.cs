@@ -13,14 +13,14 @@ public class Grappling : MonoBehaviour
     public CharacterController characterController;
     private GameObject handGrab;
     public TextMeshProUGUI grappleText;
+    public Transform grappleGun;
 
     //constraints
-    public float maxDistance = 300f;
+    public float maxDistance = 310f;
     public float grappleSpeed = 200f;
-    public float homingRadius = 50f;
-    public float coneAngle = 20f;
+    public float homingRadius = 55f;
     private bool grappleOnCooldown = false;
-    public float grappleCooldown = 5f;
+    public float grappleCooldown = 4f;
 
     //input
     public KeyCode grappleKey = KeyCode.Q;
@@ -67,6 +67,19 @@ public class Grappling : MonoBehaviour
             }
         }
 
+        Vector3 boxCenter = playerObj.position + direction * (maxDistance / 2f);
+        Vector3 boxHalfExtents = new Vector3(homingRadius, homingRadius, maxDistance / 2f);
+        Quaternion boxRotation = Quaternion.LookRotation(direction);
+
+        Collider[] boxHits = Physics.OverlapBox(boxCenter, boxHalfExtents, boxRotation);
+        foreach (Collider hit in boxHits)
+        {
+            if (hit.CompareTag("Grappleable"))
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -87,10 +100,10 @@ public class Grappling : MonoBehaviour
         if (targetPosition != Vector3.zero)
         {
             grappling = true;
-            freeze = true;
-            handGrab = Instantiate(handGrabPrefab, playerObj.position, Quaternion.identity);
+            freeze = false;
+            handGrab = Instantiate(handGrabPrefab, grappleGun.position, Quaternion.identity);
             lr.positionCount = 2;
-            lr.SetPosition(0, playerObj.position);
+            lr.SetPosition(0, grappleGun.position);
             lr.enabled = true;
 
             grappleDirection = (targetPosition - playerObj.position).normalized;
@@ -136,28 +149,23 @@ public class Grappling : MonoBehaviour
             return closestPoint;
         }
 
-        Collider[] hitsInCone = Physics.OverlapSphere(playerObj.position, maxDistance);
+        Vector3 boxCenter = playerObj.position + direction * (maxDistance / 2f);
+        Vector3 boxHalfExtents = new Vector3(homingRadius, homingRadius, maxDistance / 2f);
+        Quaternion boxRotation = Quaternion.LookRotation(direction);
 
-        closestPoint = Vector3.zero;
-        closestDistance = Mathf.Infinity;
+        Collider[] hitsInBox = Physics.OverlapBox(boxCenter, boxHalfExtents, boxRotation);
 
-        foreach (Collider hitCollider in hitsInCone)
+        foreach (Collider hitCollider in hitsInBox)
         {
             if (hitCollider.CompareTag("Grappleable"))
             {
                 Vector3 point = hitCollider.transform.position;
-                Vector3 directionToPoint = (point - playerObj.position).normalized;
-                float angle = Vector3.Angle(direction, directionToPoint);
+                float distance = Vector3.Distance(playerObj.position, point);
 
-                if (angle < coneAngle)
+                if (distance < closestDistance)
                 {
-                    float distance = Vector3.Distance(playerObj.position, point);
-
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestPoint = point;
-                    }
+                    closestDistance = distance;
+                    closestPoint = point;
                 }
             }
         }
@@ -193,6 +201,7 @@ public class Grappling : MonoBehaviour
                 if (hit.transform.CompareTag("Grappleable"))
                 {
                     handGrab.transform.position = hit.point;
+                    lr.SetPosition(0, grappleGun.position);
                     lr.SetPosition(1, handGrab.transform.position);
                     yield return new WaitForSeconds(0.1f);
                     ExecuteGrapple(hit.point);
@@ -237,9 +246,6 @@ public class Grappling : MonoBehaviour
     {
         grappling = false;
         freeze = false;
-        lr.enabled = false;
-        lr.positionCount = 0;
-        Destroy(handGrab);
 
         GetComponent<playerMovement>().movementInput = Vector3.zero;
         GetComponent<playerMovement>().moveDirection = Vector3.zero;
@@ -247,6 +253,26 @@ public class Grappling : MonoBehaviour
         GetComponent<playerMovement>().moveDirection.y = -2f;
 
         StartCoroutine(MovePlayerToGrapplePoint(grapplePoint));
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!camera || !playerObj) return;
+
+        Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
+        Gizmos.DrawSphere(playerObj.position + camera.transform.forward * maxDistance, homingRadius);
+
+        Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f);
+        Vector3 forwardDirection = camera.transform.forward;
+
+        Vector3 boxCenter = playerObj.position + forwardDirection * (maxDistance / 2f);
+        Vector3 boxSize = new Vector3(homingRadius * 2f, homingRadius * 2f, maxDistance);
+        Quaternion boxRotation = Quaternion.LookRotation(forwardDirection);
+
+        Gizmos.color = Color.green;
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
+        Gizmos.matrix = rotationMatrix;
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(homingRadius, homingRadius, maxDistance / 2f) * 2f);
     }
 
     IEnumerator MovePlayerToGrapplePoint(Vector3 grapplePoint)
@@ -258,5 +284,9 @@ public class Grappling : MonoBehaviour
         }
 
         characterController.Move((grapplePoint - playerObj.position).normalized * grappleSpeed * Time.deltaTime);
+
+        Destroy(handGrab);
+        lr.enabled = false;
+        lr.positionCount = 0;
     }
 }
