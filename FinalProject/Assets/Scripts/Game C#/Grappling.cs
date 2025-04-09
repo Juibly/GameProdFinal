@@ -255,26 +255,6 @@ public class Grappling : MonoBehaviour
         StartCoroutine(MovePlayerToGrapplePoint(grapplePoint));
     }
 
-    void OnDrawGizmos()
-    {
-        if (!camera || !playerObj) return;
-
-        Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
-        Gizmos.DrawSphere(playerObj.position + camera.transform.forward * maxDistance, homingRadius);
-
-        Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f);
-        Vector3 forwardDirection = camera.transform.forward;
-
-        Vector3 boxCenter = playerObj.position + forwardDirection * (maxDistance / 2f);
-        Vector3 boxSize = new Vector3(homingRadius * 2f, homingRadius * 2f, maxDistance);
-        Quaternion boxRotation = Quaternion.LookRotation(forwardDirection);
-
-        Gizmos.color = Color.green;
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
-        Gizmos.matrix = rotationMatrix;
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(homingRadius, homingRadius, maxDistance / 2f) * 2f);
-    }
-
     IEnumerator MovePlayerToGrapplePoint(Vector3 grapplePoint)
     {
         while (Vector3.Distance(playerObj.position, grapplePoint) > 0.1f)
