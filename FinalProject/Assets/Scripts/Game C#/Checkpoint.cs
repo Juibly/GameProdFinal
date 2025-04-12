@@ -6,6 +6,9 @@ public class Checkpoint : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<Target>().checkpointCords = other.gameObject.transform.position; ;
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<Target>().checkpointCords = other.transform.position;
+        }
     }
 }

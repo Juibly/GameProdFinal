@@ -9,6 +9,7 @@ TagManager:
   - Lever
   - PickUp
   - ElectricalBox
+  - KILL
   layers:
   - Default
   - TransparentFX

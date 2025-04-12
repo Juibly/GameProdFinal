@@ -8,11 +8,18 @@ public class pause : MonoBehaviour
     //holds ingame pause canvas
     public GameObject pMenu;
     public bool isPause;
+    public GameObject howImage;
+    public GameObject opImage;
+    public GameObject howClose;
+
 
     // pause menu is off when game starts
     void Start()
     {
         pMenu.SetActive(false);
+        howImage.SetActive(false);
+        opImage.SetActive(false);
+        howClose.SetActive(false);
         isPause = false;
     }
 
@@ -20,7 +27,7 @@ public class pause : MonoBehaviour
     void Update()
     {
         //PRESS TO PAUSE
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetButtonDown("Cancel")){
             pauseGame();
         }
 
@@ -57,16 +64,26 @@ public class pause : MonoBehaviour
     }
 
     public void howToPlay(){
-        SceneManager.LoadScene(2);
+        howImage.SetActive(true);
+        howClose.SetActive(true);
     }
 
     public void settings(){
-        SceneManager.LoadScene(3);
+        opImage.SetActive(true);
     }
     public void quit(){
         Application.Quit();
     }
 
+    public void closeHow(){
+        howClose.SetActive(false);
+        howImage.SetActive(false);
+    }
+
+public void RestartGame() {
+    		SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+            resumeGame();
+    	}
 
 }
 
