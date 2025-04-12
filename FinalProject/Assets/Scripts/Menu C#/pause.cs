@@ -10,7 +10,7 @@ public class pause : MonoBehaviour
     public bool isPause;
     public GameObject howImage;
     public GameObject opImage;
-
+    public GameObject howClose;
 
 
     // pause menu is off when game starts
@@ -19,6 +19,7 @@ public class pause : MonoBehaviour
         pMenu.SetActive(false);
         howImage.SetActive(false);
         opImage.SetActive(false);
+        howClose.SetActive(false);
         isPause = false;
     }
 
@@ -64,6 +65,7 @@ public class pause : MonoBehaviour
 
     public void howToPlay(){
         howImage.SetActive(true);
+        howClose.SetActive(true);
     }
 
     public void settings(){
@@ -73,6 +75,15 @@ public class pause : MonoBehaviour
         Application.Quit();
     }
 
+    public void closeHow(){
+        howClose.SetActive(false);
+        howImage.SetActive(false);
+    }
+
+public void RestartGame() {
+    		SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+            resumeGame();
+    	}
 
 }
 
