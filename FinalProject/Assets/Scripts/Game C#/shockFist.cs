@@ -8,6 +8,7 @@ public class shockFist : MonoBehaviour
     [Header("Shockfist")] //Variables
     public bool shockfistActive = false;
     [SerializeField] GameObject shockfistCollider;
+    public AudioSource ShockFistSource;
 
 
     [Header("Keybinds")] //Variables for Keybinds
@@ -42,7 +43,7 @@ public class shockFist : MonoBehaviour
     {
         shockfistCollider.SetActive(shockfistActive); // this changes if the collision for shockfist is active or not based on bool
 
-        if (Input.GetKeyDown(shockKey))
+        if (Input.GetButtonDown("Shockfist"))
         {
             if (shockFistCooldown) //if cooldown ongoing
             {
@@ -52,7 +53,7 @@ public class shockFist : MonoBehaviour
             {
                 shockfistActive = true; //activates collision for shock fist
                 shockFistCooldown = true; // starts cooldown before you can press again
-
+                ShockFistSource.Play();
                 //play vfx like animation state and audio source
                 //shockfistSource.Play(); //sound when hitting
                 //playerAnimator.Play(shockfist); //animation when hitting

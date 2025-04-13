@@ -9,11 +9,12 @@ TagManager:
   - Lever
   - PickUp
   - ElectricalBox
+  - KILL
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ground
   - Water
   - UI
   - 
