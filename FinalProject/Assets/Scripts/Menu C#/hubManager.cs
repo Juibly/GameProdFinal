@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class hubManager : MonoBehaviour
 {
         public GameObject hubMenu;
-        public bool isSelect;
+
+// when kevin steps on purple button , opens menu with the corressponding button active
+//think we need gameobject rooftop button, sewer button, apartment button defining which is which to their collidier ect 
 
 
-    // Start is called before the first frame update
+    // hub menu is off by default
     void Start()
     {
         hubMenu.SetActive(false);
