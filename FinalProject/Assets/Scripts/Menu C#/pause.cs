@@ -31,13 +31,6 @@ public class pause : MonoBehaviour
             pauseGame();
         }
 
-    //checks bool, allowing menu access if pause
-         if (isPause == true) {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
     }
 
     public void pauseGame()
@@ -46,6 +39,8 @@ public class pause : MonoBehaviour
         Time.timeScale = 0f;
         pMenu.SetActive(true);
         isPause = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
     }
 
@@ -56,6 +51,7 @@ public class pause : MonoBehaviour
         isPause = false;
         Time.timeScale = 1f;
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
     }
     public void goMainMenu()
