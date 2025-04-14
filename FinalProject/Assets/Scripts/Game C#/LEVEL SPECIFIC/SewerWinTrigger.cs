@@ -17,6 +17,7 @@ public class SewerWinTrigger : MonoBehaviour
 
         Debug.Log("rooftop best time is " + SavedData.sewerBestTime);
 
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(5);
     }

@@ -1166,12 +1166,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6020195558996082723}
   - component: {fileID: 6020195558996082726}
-  - component: {fileID: 5312804249232891675}
   - component: {fileID: 6020195558996082725}
   - component: {fileID: 6020195558996082727}
   - component: {fileID: 6020195558996082744}
   - component: {fileID: 6020195558996082745}
   - component: {fileID: 969327586}
+  - component: {fileID: 8600541275545325028}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1234,21 +1234,6 @@ MonoBehaviour:
   jumping: 0
   isRunning: 0
   isWalking: 0
---- !u!114 &5312804249232891675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6020195558996082722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a07f1fd2fac4746ae602546ccfa1f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUp: 0
-  PickupCollider: {fileID: 4171245327874651347}
-  pickupKey: 101
 --- !u!114 &6020195558996082725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1430,6 +1415,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8600541275545325028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020195558996082722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43c885b767ee7244868b14ea5bc8572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUp: 0
+  PickupCollider: {fileID: 4171245327874651347}
+  pickupKey: 101
 --- !u!1 &6817555878952391363
 GameObject:
   m_ObjectHideFlags: 0
