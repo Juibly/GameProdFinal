@@ -17,8 +17,9 @@ public class rooftopWinTrigger : MonoBehaviour
 
         Debug.Log("rooftop best time is " + SavedData.rooftopBestTime);
 
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(5);
     }
 
 

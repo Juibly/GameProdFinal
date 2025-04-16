@@ -9,6 +9,7 @@ public class leverLaser : MonoBehaviour
     public bool isPowered;
     [SerializeField] GameObject laser;
     [SerializeField] GameObject whatAmI;
+    [SerializeField] GameObject interactText;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,13 @@ public class leverLaser : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isPowered)
+        {
+            if (whatAmI.CompareTag("Lever"))
+            {
+                interactText.SetActive(true);
+            }
+        }
         if (other.gameObject.CompareTag("ShockFist")) // powered by shockfist ability
         {
             if (whatAmI.CompareTag("ElectricalBox")) // is this a electrical box
@@ -40,10 +48,15 @@ public class leverLaser : MonoBehaviour
             {
                 isPowered = !isPowered; //turn power on/off
                 LeverSource.Play(); //play vfx if flipped
+                interactText.SetActive(false);
                 //flip lever
                 if (isPowered) { whatAmI.transform.Rotate(0.0f, 180.0f, 0.0f, Space.Self); }
                 if (!isPowered) { whatAmI.transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self); }
             }
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        interactText.SetActive(false);
     }
 }

@@ -14,7 +14,7 @@ public class hubManager : MonoBehaviour
     // hub menu is off by default
     void Start()
     {
-        hubMenu.SetActive(false);
+        
     }
 
     // button selection code

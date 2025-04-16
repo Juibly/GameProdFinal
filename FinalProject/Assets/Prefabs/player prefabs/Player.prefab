@@ -1166,12 +1166,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6020195558996082723}
   - component: {fileID: 6020195558996082726}
-  - component: {fileID: 5312804249232891675}
   - component: {fileID: 6020195558996082725}
   - component: {fileID: 6020195558996082727}
   - component: {fileID: 6020195558996082744}
   - component: {fileID: 6020195558996082745}
   - component: {fileID: 969327586}
+  - component: {fileID: 8600541275545325028}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1188,7 +1188,7 @@ Transform:
   m_GameObject: {fileID: 6020195558996082722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 18.95, z: 300.82}
-  m_LocalScale: {x: 12.279504, y: 12.279504, z: 12.279504}
+  m_LocalScale: {x: 20.838917, y: 20.838917, z: 20.838917}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6020195558910223184}
@@ -1231,21 +1231,9 @@ MonoBehaviour:
   DRight: 0
   hasPunched: 0
   hasGrappled: 0
---- !u!114 &5312804249232891675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6020195558996082722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a07f1fd2fac4746ae602546ccfa1f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUp: 0
-  PickupCollider: {fileID: 4171245327874651347}
-  pickupKey: 101
+  jumping: 0
+  isRunning: 0
+  isWalking: 0
 --- !u!114 &6020195558996082725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,10 +1251,11 @@ MonoBehaviour:
   playerObj: {fileID: 6020195558618787635}
   camera: {fileID: 0}
   characterController: {fileID: 6020195558618787636}
+  grappleText: {fileID: 0}
+  grappleGun: {fileID: 3322928707712565934}
   maxDistance: 300
   grappleSpeed: 200
   homingRadius: 50
-  coneAngle: 20
   grappleCooldown: 5
   grappleKey: 113
   freeze: 0
@@ -1305,7 +1294,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shield: {fileID: 6020195558183804901}
   player: {fileID: 6020195558996082722}
-  shieldKey: 324
   ShieldUpSource: {fileID: 1481090678207279186}
   ShieldDownSource: {fileID: 4509478509442002068}
 --- !u!120 &6020195558996082745
@@ -1427,6 +1415,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8600541275545325028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020195558996082722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43c885b767ee7244868b14ea5bc8572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUp: 0
+  PickupCollider: {fileID: 4171245327874651347}
+  pickupKey: 101
 --- !u!1 &6817555878952391363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,12 +1741,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8121841704623459474, guid: bdc71eb600f601a42aa4fc22ee41dc28, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e2ca89814a66cc94da7c2644aef17134, type: 2}
     - target: {fileID: 8484616478417853844, guid: bdc71eb600f601a42aa4fc22ee41dc28, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdc71eb600f601a42aa4fc22ee41dc28, type: 3}
+--- !u!4 &3322928707712565934 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6013891087221992006, guid: bdc71eb600f601a42aa4fc22ee41dc28, type: 3}
+  m_PrefabInstance: {fileID: 9036692663745046760}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3468475103676816013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5569465802120737381, guid: bdc71eb600f601a42aa4fc22ee41dc28, type: 3}

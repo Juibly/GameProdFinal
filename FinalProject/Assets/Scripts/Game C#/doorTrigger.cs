@@ -7,6 +7,7 @@ public class doorTrigger : MonoBehaviour
     [Header("Door")] //Variables
     public bool isPowered;
     [SerializeField] GameObject door;
+    [SerializeField] GameObject interactText;
     public AudioSource LeverSource;
 
 
@@ -47,6 +48,12 @@ public class doorTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isPowered) {
+            if (whatAmI.CompareTag("Lever"))
+            {
+                interactText.SetActive(true);
+            }
+        }
         if (other.gameObject.CompareTag("ShockFist")) // powered by shockfist ability
         {
             if (whatAmI.CompareTag("ElectricalBox")) // is this a electrical box
@@ -62,10 +69,15 @@ public class doorTrigger : MonoBehaviour
                 isPowered = !isPowered;
                 onOff = !onOff;
                 LeverSource.Play();
+                interactText.SetActive(false);
                 //flip lever
                 if (isPowered) { whatAmI.transform.Rotate(0.0f, 180.0f, 0.0f, Space.Self); }
                 if (!isPowered) { whatAmI.transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self); }
             }
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        interactText.SetActive(false);
     }
 }
