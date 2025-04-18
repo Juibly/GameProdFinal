@@ -19,6 +19,7 @@ public class doorTrigger : MonoBehaviour
 
     [Header("Lever")]
     public bool onOff; //bool for switching the levers animation state
+    public bool isVertical; //bool for (if its a lever) if it is horizontal on the ground or vertical on a wall)
     [SerializeField] GameObject whatAmI; //see if the item that is the source of the script is a lever or a powerbox 
 
     // Start is called before the first frame update
@@ -71,8 +72,16 @@ public class doorTrigger : MonoBehaviour
                 LeverSource.Play();
                 interactText.SetActive(false);
                 //flip lever
-                if (isPowered) { whatAmI.transform.Rotate(0.0f, 180.0f, 0.0f, Space.Self); }
-                if (!isPowered) { whatAmI.transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self); }
+                if (isPowered)
+                {
+                    if(isVertical) { whatAmI.transform.Rotate(0.0f, 0.0f, 180.0f, Space.Self); } //rotation flip for vertical
+                    if(!isVertical) { whatAmI.transform.Rotate(0.0f, 180.0f, 0.0f, Space.Self); } //rotation flip for horizontal
+                }
+                if (!isPowered)
+                {
+                    if (isVertical) { whatAmI.transform.Rotate(0.0f, 0.0f, -180.0f, Space.Self); } //rotation flip for vertical
+                    if (!isVertical) { whatAmI.transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self); } //rotation flip for horizontal
+                }
             }
         }
     }
