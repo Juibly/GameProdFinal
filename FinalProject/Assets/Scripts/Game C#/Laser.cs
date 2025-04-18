@@ -11,6 +11,7 @@ public class Laser : MonoBehaviour
 
     private RaycastHit rayHit;
     private Ray ray;
+    public AudioSource killSound;
 
     private void Awake()
     {
@@ -29,7 +30,9 @@ public class Laser : MonoBehaviour
             //must have a MonoBehaviour script called Target with public method Hit
             if (rayHit.collider.TryGetComponent(out Target target))
             {
+                killSound.Play();
                 target.Hit();
+                
             }
         }
         else

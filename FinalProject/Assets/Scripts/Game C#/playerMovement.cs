@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
+
+public AudioSource jumpSound;
+
     //variables related to movement speed
     [Header("Movement Speed")]
     public float walkSpeed = 38f;
@@ -83,7 +86,7 @@ public class playerMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded) { jumping = true; } //turn on jump animation the frame the button is PRESSED
+        if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded) { jumping = true; jumpSound.Play();} //turn on jump animation the frame the button is PRESSED
         
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded) //if jump is HELD and you can move and are on the ground
         {
