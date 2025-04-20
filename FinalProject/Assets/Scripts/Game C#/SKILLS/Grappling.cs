@@ -38,7 +38,6 @@ public class Grappling : MonoBehaviour
         if (Input.GetButtonDown("Grapple") && !grappling && !grappleOnCooldown)
         {
             StartCoroutine(GrappleCooldown());
-            GrappleSource.Play();
             StartGrapple();
         }
 
@@ -257,6 +256,8 @@ public class Grappling : MonoBehaviour
 
     IEnumerator MovePlayerToGrapplePoint(Vector3 grapplePoint)
     {
+        GrappleSource.Play();
+
         while (Vector3.Distance(playerObj.position, grapplePoint) > 0.1f)
         {
             characterController.Move((grapplePoint - playerObj.position).normalized * grappleSpeed * Time.deltaTime);
