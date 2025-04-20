@@ -5,10 +5,11 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
  public AudioSource CheckpointSource;
-public GameObject checkpointText;
+ //public GameObject checkpointText; 
+ //TURNED OFF CHECKPOINT TEXT SINCE IT WASNT ASSIGNED IN INSPECTOR -VEE
 
 public void Start(){
- checkpointText.SetActive(false);
+ //checkpointText.SetActive(false);
 }
 
     private void OnTriggerEnter(Collider other)
@@ -18,7 +19,7 @@ public void Start(){
         {
             other.GetComponent<Target>().checkpointCords = other.transform.position;
             CheckpointSource.Play();
-            checkpointText.SetActive(true);
+            //checkpointText.SetActive(true);
         }
     }
 }
