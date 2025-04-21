@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class evidence : MonoBehaviour
+public class Evidence : MonoBehaviour
 {
     [Header("Evidence")] //Variables related to evidence
     public int evidenceCount; //int for how much evidence is collected
     public int evidenceTotal; //int for total evidence in level
     bool evidenceFinished = false; //if evidence is finished being collected call win condition
+    [SerializeField] GameObject timerText;
 
 
     // Start is called before the first frame update
@@ -25,10 +27,17 @@ public class evidence : MonoBehaviour
 
         if (evidenceFinished) //if win condition met
         {
-            //win condition true, i believe the win script was changed to be a different script for rooftop than it is apartment
-            //whatever the variable is that brings up the win screen/ save data etc goes here!
-            // for now here is a placeholder !
-            Debug.Log("All evidence collected!");
+            if (SavedData.apartmentBestTime > (60 - timerText.gameObject.GetComponent<timer>().timerTime))
+            {
+                SavedData.apartmentBestTime = 60 - timerText.gameObject.GetComponent<timer>().timerTime;
+            }
+            SavedData.apartmentCompletion = true;
+
+            Debug.Log("rooftop best time is " + SavedData.sewerBestTime);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene(5);
         }
 
 
