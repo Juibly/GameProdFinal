@@ -16,7 +16,7 @@ public class Evidence : MonoBehaviour
     void Start()
     {
         evidenceCount = 0; //initialize evidence collected
-        evidenceTotal = 4;
+        evidenceTotal = 3;
         evidenceFinished = false; //initialize win condition for level
     }
 
