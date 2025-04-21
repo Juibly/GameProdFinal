@@ -495,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9021788097320707447, guid: 7854c2532588a9e4387bc73d6d2248f4, type: 3}
       propertyPath: laserDistance
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9021788097320707447, guid: 7854c2532588a9e4387bc73d6d2248f4, type: 3}
       propertyPath: OnHitTarget.m_PersistentCalls.m_Calls.Array.size
@@ -21413,6 +21413,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &1154737493
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154737485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6606501483488557099, guid: c68e4c95a2c76584e8cb5b89a0ac3a30, type: 3}
 --- !u!1 &1169441877
 GameObject:
   m_ObjectHideFlags: 0
@@ -24484,11 +24498,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7667906943337626716, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017641597
+      value: -0.0000000176416
       objectReference: {fileID: 0}
     - target: {fileID: 7667906943337626716, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000000182681
+      value: 0.0000000018268105
       objectReference: {fileID: 0}
     - target: {fileID: 7667906944303337973, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24596,11 +24610,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7667906945047882339, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 2.2073694e-16
+      value: 6.5383003e-19
       objectReference: {fileID: 0}
     - target: {fileID: 7667906945047882339, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -6.5454636e-18
+      value: -3.666162e-18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
@@ -24731,7 +24745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9021788097320707447, guid: 7854c2532588a9e4387bc73d6d2248f4, type: 3}
       propertyPath: laserDistance
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9021788097320707447, guid: 7854c2532588a9e4387bc73d6d2248f4, type: 3}
       propertyPath: OnHitTarget.m_PersistentCalls.m_Calls.Array.size
@@ -25254,11 +25268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7529919801008202615, guid: ae98235bd69ccb34eb066a997c0faae9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000035283197
+      value: -0.0000000352832
       objectReference: {fileID: 0}
     - target: {fileID: 7529919801008202615, guid: ae98235bd69ccb34eb066a997c0faae9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000036536207
+      value: 0.000000003653621
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae98235bd69ccb34eb066a997c0faae9, type: 3}
