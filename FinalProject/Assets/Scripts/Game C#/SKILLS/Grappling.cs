@@ -16,8 +16,8 @@ public class Grappling : MonoBehaviour
     public Transform grappleGun;
 
     //constraints
-    public float maxDistance = 310f;
-    public float grappleSpeed = 200f;
+    public float maxDistance = 480f;
+    public float grappleSpeed = 225f;
     public float homingRadius = 55f;
     private bool grappleOnCooldown = false;
     public float grappleCooldown = 4f;
@@ -41,9 +41,7 @@ public class Grappling : MonoBehaviour
             StartGrapple();
         }
 
-        bool grappleableObjectInRange = IsGrappleableObjectInRange();
-
-        grappleText.enabled = grappleableObjectInRange;
+        UpdateGrappleText();
 
         if (freeze && !grappling)
         {
@@ -51,20 +49,16 @@ public class Grappling : MonoBehaviour
         }
     }
 
+    void UpdateGrappleText()
+    {
+        bool grappleableObjectInRange = IsGrappleableObjectInRange();
+        grappleText.enabled = grappleableObjectInRange && !grappleOnCooldown;
+    }
+
     bool IsGrappleableObjectInRange()
     {
         Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         Vector3 direction = ray.direction;
-
-        Collider[] hits = Physics.OverlapSphere(playerObj.position + direction * maxDistance, homingRadius);
-
-        foreach (Collider hitCollider in hits)
-        {
-            if (hitCollider.CompareTag("Grappleable"))
-            {
-                return true;
-            }
-        }
 
         Vector3 boxCenter = playerObj.position + direction * (maxDistance / 2f);
         Vector3 boxHalfExtents = new Vector3(homingRadius, homingRadius, maxDistance / 2f);
@@ -87,6 +81,8 @@ public class Grappling : MonoBehaviour
         grappleOnCooldown = true;
         yield return new WaitForSeconds(grappleCooldown);
         grappleOnCooldown = false;
+
+        UpdateGrappleText();
     }
 
     void StartGrapple()
@@ -108,6 +104,8 @@ public class Grappling : MonoBehaviour
             grappleDirection = (targetPosition - playerObj.position).normalized;
 
             StartCoroutine(MoveHandGrab());
+
+            UpdateGrappleText();
         }
     }
 
@@ -123,36 +121,14 @@ public class Grappling : MonoBehaviour
             }
         }
 
-        Collider[] hits = Physics.OverlapSphere(playerObj.position + direction * maxDistance, homingRadius);
-
-        Vector3 closestPoint = Vector3.zero;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (Collider hitCollider in hits)
-        {
-            if (hitCollider.CompareTag("Grappleable"))
-            {
-                Vector3 point = hitCollider.transform.position;
-                float distance = Vector3.Distance(playerObj.position, point);
-
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestPoint = point;
-                }
-            }
-        }
-
-        if (closestPoint != Vector3.zero)
-        {
-            return closestPoint;
-        }
-
         Vector3 boxCenter = playerObj.position + direction * (maxDistance / 2f);
         Vector3 boxHalfExtents = new Vector3(homingRadius, homingRadius, maxDistance / 2f);
         Quaternion boxRotation = Quaternion.LookRotation(direction);
 
         Collider[] hitsInBox = Physics.OverlapBox(boxCenter, boxHalfExtents, boxRotation);
+
+        Vector3 closestPoint = Vector3.zero;
+        float closestDistance = Mathf.Infinity;
 
         foreach (Collider hitCollider in hitsInBox)
         {
@@ -239,6 +215,8 @@ public class Grappling : MonoBehaviour
         GetComponent<playerMovement>().moveDirection = Vector3.zero;
 
         GetComponent<playerMovement>().moveDirection.y = -2f;
+
+        UpdateGrappleText();
     }
 
     void ExecuteGrapple(Vector3 grapplePoint)
@@ -252,19 +230,26 @@ public class Grappling : MonoBehaviour
         GetComponent<playerMovement>().moveDirection.y = -2f;
 
         StartCoroutine(MovePlayerToGrapplePoint(grapplePoint));
+
+        UpdateGrappleText();
     }
 
     IEnumerator MovePlayerToGrapplePoint(Vector3 grapplePoint)
     {
         GrappleSource.Play();
 
-        while (Vector3.Distance(playerObj.position, grapplePoint) > 0.1f)
+        Vector3 start = playerObj.position;
+        float heightBoost = 20f;
+        float t = 0;
+
+        while (t < 1)
         {
-            characterController.Move((grapplePoint - playerObj.position).normalized * grappleSpeed * Time.deltaTime);
+            t += Time.deltaTime * grappleSpeed / Vector3.Distance(start, grapplePoint);
+            Vector3 position = Vector3.Lerp(start, grapplePoint, t);
+            position.y += Mathf.Sin(t * Mathf.PI) * heightBoost;
+            characterController.Move((position - playerObj.position));
             yield return null;
         }
-
-        characterController.Move((grapplePoint - playerObj.position).normalized * grappleSpeed * Time.deltaTime);
 
         Destroy(handGrab);
         lr.enabled = false;
