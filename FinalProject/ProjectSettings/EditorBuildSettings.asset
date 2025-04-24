@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gameplay/Levels/apartmentLevel.unity
     guid: cb53c5c02886c744a8ba7548e4e43d35
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/WinLoss/finalWinScreen.unity
+    guid: fbde6214957453e4596b417fa240e379
   m_configObjects: {}
