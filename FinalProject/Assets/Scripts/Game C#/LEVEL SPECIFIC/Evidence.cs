@@ -10,6 +10,7 @@ public class Evidence : MonoBehaviour
     public int evidenceTotal; //int for total evidence in level
     bool evidenceFinished = false; //if evidence is finished being collected call win condition
     [SerializeField] GameObject timerText;
+    [SerializeField] GameObject interactText;
 
 
     // Start is called before the first frame update
@@ -51,6 +52,7 @@ public class Evidence : MonoBehaviour
             other.gameObject.SetActive(false); //make evidence that was collected with pickup no longer active
             Debug.Log("Evidence Collected");
             evidenceCount++; //add one to evidence collected counter
+            interactText.SetActive(false);
         }
     }
 }
