@@ -10,6 +10,7 @@ public AudioSource jumpSound;
     [Header("Cheats")] //Variables for Cheats
     public static bool cheatOn = false;
     public bool cheatOn1 = false;
+    public GameObject cheatText;
 
     //variables related to movement speed
     [Header("Movement Speed")]
@@ -61,7 +62,7 @@ public AudioSource jumpSound;
     void Start()
     {
         animator = GetComponent<Animator>(); //acquire animations
-
+        cheatText.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,6 +77,8 @@ public AudioSource jumpSound;
         {
             runSpeed = 600;
             walkSpeed = 400;
+            cheatText.SetActive(true);
+
         }
 
         if (GetComponent<Grappling>().freeze)//for freezing while grappling
