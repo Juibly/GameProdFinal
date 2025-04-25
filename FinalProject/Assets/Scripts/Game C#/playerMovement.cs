@@ -7,6 +7,10 @@ public class playerMovement : MonoBehaviour
 
 public AudioSource jumpSound;
 
+    [Header("Cheats")] //Variables for Cheats
+    public static bool cheatOn = false;
+    public bool cheatOn1 = false;
+
     //variables related to movement speed
     [Header("Movement Speed")]
     public float walkSpeed = 38f;
@@ -57,11 +61,22 @@ public AudioSource jumpSound;
     void Start()
     {
         animator = GetComponent<Animator>(); //acquire animations
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cheatOn == true)
+        {
+            cheatOn1 = true;
+        }
+
+        if (cheatOn1 == true)
+        {
+            runSpeed = 600;
+            walkSpeed = 400;
+        }
 
         if (GetComponent<Grappling>().freeze)//for freezing while grappling
         {

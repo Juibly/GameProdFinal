@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class OptionClick : MonoBehaviour
 {
-    shockFist shockFist;
 
     public GameObject ClickOp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class OptionClick : MonoBehaviour
 
     public void OpClick()
     {
-        shockFist.cheatOn = true;
+        playerMovement.cheatOn = true;
         Debug.Log("cheatOn");
     }
 }

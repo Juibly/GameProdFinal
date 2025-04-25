@@ -21,9 +21,9 @@ public class shockFist : MonoBehaviour
     public float cooldownRemaining;
 
 
-    [Header("Cheats")] //Variables for Cheats
-    public static bool cheatOn; //if there is cheat that turns off cooldown
-    public bool cheatOn1;
+    //[Header("Cheats")] //Variables for Cheats
+    //public static bool cheatOn; //if there is cheat that turns off cooldown
+    //public bool cheatOn1;
 
 
     //[Header("VFX")] //Variables for VFX
@@ -35,8 +35,8 @@ public class shockFist : MonoBehaviour
     void Start()
     {
         shockfistCollider.SetActive(false); // this turns off the shock fist collider on start
-        cheatOn1 = false;
-        cooldownRemaining = 8;
+        //cheatOn1 = false;
+        //cooldownRemaining = 8;
 
         //playerAnimator = gameObject.GetComponent<Animator>(); //get animator for player
     }
@@ -46,10 +46,10 @@ public class shockFist : MonoBehaviour
     {
         shockfistCollider.SetActive(shockfistActive); // this changes if the collision for shockfist is active or not based on bool
 
-        if (cheatOn == true)
-        {
-            cheatOn1 = true;
-        }
+        //if (cheatOn == true)
+        //{
+         //   cheatOn1 = true;
+        //}
 
         if (Input.GetButtonDown("Shockfist"))
         {
@@ -62,14 +62,14 @@ public class shockFist : MonoBehaviour
                 shockfistActive = true; //activates collision for shock fist
                 shockFistCooldown = true; // starts cooldown before you can press again
                 ShockFistSource.Play();
-                if (cheatOn1 == false)
-                {
-                    cooldownRemaining = 8;
-                }
-               else
-                {
-                    cooldownRemaining = 0;
-                }
+                //if (cheatOn1 == false)
+                //{
+                  //  cooldownRemaining = 8;
+                //}
+               //else
+                //{
+                  //  cooldownRemaining = 0;
+                //}
                 //play vfx like animation state and audio source
                 //shockfistSource.Play(); //sound when hitting
                 //playerAnimator.Play(shockfist); //animation when hitting
@@ -88,6 +88,6 @@ public class shockFist : MonoBehaviour
             shockfistActive = false;
         }
         if (!shockFistCooldown) { cooldownRemaining = timerTime; } //reset timer
-        if (cheatOn) { shockFistCooldown = false; } //if cheat is on - cooldown is always off
+        //if (cheatOn) { shockFistCooldown = false; } //if cheat is on - cooldown is always off
     }
 }
