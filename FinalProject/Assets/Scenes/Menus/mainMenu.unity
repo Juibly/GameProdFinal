@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Would you like to enable freeplay?
+  m_text: Would you like to disable Shockfist cooldown?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21abc40162f186945bc5c0ec51c6b2f5, type: 2}
   m_sharedMaterial: {fileID: -4393017286818158073, guid: 21abc40162f186945bc5c0ec51c6b2f5, type: 2}
@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.4
+  m_fontSize: 23.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1967,6 +1967,7 @@ GameObject:
   - component: {fileID: 1496652574}
   - component: {fileID: 1496652573}
   - component: {fileID: 1496652572}
+  - component: {fileID: 1496652576}
   m_Layer: 5
   m_Name: optionsPop
   m_TagString: Untagged
@@ -2058,6 +2059,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1496652576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496652571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d371022b0063274b88737248a728ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1613768317
 GameObject:
   m_ObjectHideFlags: 0

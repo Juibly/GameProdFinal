@@ -24568,11 +24568,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7667906943337626716, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000176416
+      value: 0.000000017641597
       objectReference: {fileID: 0}
     - target: {fileID: 7667906943337626716, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000018268105
+      value: -0.00000000182681
       objectReference: {fileID: 0}
     - target: {fileID: 7667906944303337973, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24596,11 +24596,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7667906944303337973, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -7.7e-44
+      value: -1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 7667906944303337973, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.7e-44
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7667906944703513412, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_Follow
@@ -24676,15 +24676,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7667906945047882339, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.054244533
+      value: 0.054244537
       objectReference: {fileID: 0}
     - target: {fileID: 7667906945047882339, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000003719806
+      value: -6.5383003e-19
       objectReference: {fileID: 0}
     - target: {fileID: 7667906945047882339, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 2.0207666e-10
+      value: 3.666162e-18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f9d9433c16471d48b0c06f5ee72b27a, type: 3}
@@ -25342,11 +25342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7529919801008202615, guid: ae98235bd69ccb34eb066a997c0faae9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000352832
+      value: 0.000000035283197
       objectReference: {fileID: 0}
     - target: {fileID: 7529919801008202615, guid: ae98235bd69ccb34eb066a997c0faae9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000003653621
+      value: -0.0000000036536207
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae98235bd69ccb34eb066a997c0faae9, type: 3}
@@ -28409,10 +28409,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2047822134}
     m_Modifications:
+    - target: {fileID: 3030578019389707044, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 66fbed357210bd642928a3cf5a284365, type: 3}
+    - target: {fileID: 3030578019389707047, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030578019389707047, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 8875374189027980476, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2135702667}
+    - target: {fileID: 8875374189027980477, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1404
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875374189027980477, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 446
+      objectReference: {fileID: 0}
     - target: {fileID: 8875374189854642500, guid: f6dc774f40b64f247b91ef581971c085, type: 3}
       propertyPath: m_Name
       value: pauseMenu
