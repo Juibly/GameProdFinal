@@ -40,6 +40,11 @@ public class Evidence : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene(5);
+
+            if (SavedData.rooftopCompletion && SavedData.sewerCompletion && SavedData.apartmentCompletion == true)
+            {
+                SceneManager.LoadScene(9);
+            }
         }
 
 
