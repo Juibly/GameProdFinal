@@ -40,7 +40,7 @@ public void showController(){
 
     //MENU SELECTIONS
     public void loadMainMenu(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     //OPENS HUB

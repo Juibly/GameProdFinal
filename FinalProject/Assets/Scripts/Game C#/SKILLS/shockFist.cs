@@ -16,13 +16,14 @@ public class shockFist : MonoBehaviour
 
 
     [Header("Cooldown Timer")] //Variables for cooldown/timer on using the shockfist
-    public bool shockFistCooldown = false;
+    public bool shockFistCooldown = true;
     public float timerTime;
     public float cooldownRemaining;
 
 
     [Header("Cheats")] //Variables for Cheats
-    public bool cheatOn; //if there is cheat that turns off cooldown
+    public static bool cheatOn; //if there is cheat that turns off cooldown
+    public bool cheatOn1;
 
 
     //[Header("VFX")] //Variables for VFX
@@ -34,6 +35,8 @@ public class shockFist : MonoBehaviour
     void Start()
     {
         shockfistCollider.SetActive(false); // this turns off the shock fist collider on start
+        cheatOn1 = false;
+        cooldownRemaining = 8;
 
         //playerAnimator = gameObject.GetComponent<Animator>(); //get animator for player
     }
@@ -42,6 +45,11 @@ public class shockFist : MonoBehaviour
     void Update()
     {
         shockfistCollider.SetActive(shockfistActive); // this changes if the collision for shockfist is active or not based on bool
+
+        if (cheatOn == true)
+        {
+            cheatOn1 = true;
+        }
 
         if (Input.GetButtonDown("Shockfist"))
         {
@@ -54,6 +62,14 @@ public class shockFist : MonoBehaviour
                 shockfistActive = true; //activates collision for shock fist
                 shockFistCooldown = true; // starts cooldown before you can press again
                 ShockFistSource.Play();
+                if (cheatOn1 == false)
+                {
+                    cooldownRemaining = 8;
+                }
+               else
+                {
+                    cooldownRemaining = 0;
+                }
                 //play vfx like animation state and audio source
                 //shockfistSource.Play(); //sound when hitting
                 //playerAnimator.Play(shockfist); //animation when hitting

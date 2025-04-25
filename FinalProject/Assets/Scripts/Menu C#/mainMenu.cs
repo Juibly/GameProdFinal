@@ -28,12 +28,12 @@ public void back(){ //if say no to freeplay options screen goes away, and menu i
 
 //MENU SELECTIONS
     public void loadMainMenu(){
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     //OPENS HUB
     public void playGame(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void howToPlay(){
